@@ -2,6 +2,8 @@
 
 setup guide
 
+- make a new branch as your name
+
 - Clone to your local computer
 
 - install docker
