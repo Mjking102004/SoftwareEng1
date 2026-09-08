@@ -112,4 +112,4 @@ docker compose up --build -d
    git commit -m "Your message of the changes you made"
    git push
    ```
-The first time you push to your brance it will give you a command to upstream to your branch, just copy and paste it into your terminal and going forward you can use "git push"
+The first time you push to your brance it will give you a command to upstream to your branch, just copy and paste it into your terminal and going forward you can use "git push".
