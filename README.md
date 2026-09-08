@@ -1,10 +1,12 @@
 # SoftwareEng1
 
-setup guide
+Setup guide
 
-- make a new branch as your name
+- Make a new branch as your name
 
 - Clone to your local computer
+    - You might need to install git commands to your computer
+    - https://github.com/git-guides/install-git
 
 - install docker
   - This is how we will run our code
