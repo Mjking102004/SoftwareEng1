@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Rowdy's Bookstore</title>
+</head>
+<body>
+    <header id="site-header"></header>
+    <main>
+        <h1>My Account</h1>
+        <p>View and update your account information.</p>
+
+        <p id="account-status" role="status">
+            Account information is not connected yet.
+        </p>
+
+        <h2>Personal Information</h2>
+
+        <form id="account-form">
+            <div>
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name"
+                       name="full_name"
+                       autocomplete="name" required>
+            </div>
+
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email"
+                       name="email"
+                       autocomplete="email" required>
+            </div>
+
+            <button type="submit">Update Account</button>
+        </form>
+
+        <p id="account-message" role="status"
+           aria-live="polite"></p>
+
+        <h2>Order History</h2>
+        <p>Order history will be available after integration.</p>
+
+        <p><a href="/home">Back to Bookstore</a></p>
+    </main>
+
+    <script type="module" src="/src/ui/accountUI.js"></script>
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+</body>
+</html>
