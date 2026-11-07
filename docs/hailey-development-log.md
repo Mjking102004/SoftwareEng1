@@ -123,14 +123,64 @@ The changes have not been merged into main.
 
 9. Next Development Session
 
-November 7, 2026 - Planned Work
 
-- Configure GitHub Desktop to manage the existing local repository.
-- Create and commit this development log.
-- Update registration and account management forms.
-- Improve basic styling and frontend validation.
-- Test updated features through Docker.
-- Push new changes to the hailey branch.
-- Review team database and API decisions before backend development.
+November 7, 2026 - Frontend Improvements
 
-These tasks are planned and should not be considered completed until implemented and verified.
+1. GitHub and Development Environment
+
+- Connected GitHub Desktop to the existing SoftwareEng1 repository.
+- Verified my development branch and previous commits.
+- Created the development log to document implementation and testing.
+- Fetched the latest remote repository information.
+- Confirmed that main had no new commits and no Abraham development branch was visible.
+
+2. Registration Form Improvements
+
+- Replaced the Full Name field with separate First Name and Last Name fields.
+- Organized form inputs using reusable form-group containers.
+- Added individual feedback elements for each input.
+- Implemented field-by-field validation using JavaScript event listeners.
+- Added validation for required names, email format, password length, and   password confirmation.
+- Added success and error classes to form groups for future CSS styling.
+- Preserved the existing frontend-only registration behavior.
+
+3. Login Form Improvements
+
+- Organized form inputs using reusable form-group containers.
+- Added individual feedback elements for email and password.
+- Implemented field-by-field validation using blur and submit events.
+- Added email format and nonempty password validation.
+- Preserved frontend-only login behavior pending backend authentication.
+
+4. Account Management Improvements
+
+- Replaced Full Name with separate First Name and Last Name fields.
+- Standardized the account form structure using form-group containers.
+- Updated accountUI.js to reference the new fields.
+- Preserved the account update and order history placeholders.
+- Full field-by-field account validation remains planned.
+
+5. Testing
+
+- Rebuilt and started the application using Docker Compose.
+- Confirmed that the registration, login, and account pages loaded.
+- Tested registration input validation and password confirmation.
+- Tested login validation with invalid email and password inputs.
+- Confirmed that the account form and navigation remained functional.
+- Verified that frontend validation does not create accounts or authenticate users.
+
+6. Team Coordination and Design
+
+- Shared development progress with the team.
+- Decided to postpone individual page styling until Abraham's shared layout and CSS are available.
+- Confirmed that only main and hailey branches were visible in the remote repository.
+- Continued waiting for the team's finalized database schema and API conventions.
+
+7. Remaining Work
+
+- Add field-by-field validation to the account management form.
+- Review and integrate shared CSS and navigation.
+- Connect registration and login to the Express backend.
+- Implement server-side validation, password hashing, and authentication.
+- Connect account management to PostgreSQL.
+- Complete integration and end-to-end testing.

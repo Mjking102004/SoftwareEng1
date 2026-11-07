@@ -8,34 +8,59 @@
 </head>
 <body>
     <header id="site-header"></header>
+
     <main>
         <h1>Create an Account</h1>
         <p>Join Rowdy's Bookstore!</p>
 
-        <form id="register-form">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name"
-                   autocomplete="name" required>
+        <form id="register-form" novalidate>
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first_name"
+                       autocomplete="given-name"
+                       aria-describedby="first-name-feedback" required>
+                <span id="first-name-feedback" class="form-feedback"></span>
+            </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email"
-                   autocomplete="email" required>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last_name"
+                       autocomplete="family-name"
+                       aria-describedby="last-name-feedback" required>
+                <span id="last-name-feedback" class="form-feedback"></span>
+            </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password"
-                   name="password" minlength="8"
-                   autocomplete="new-password" required>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                       autocomplete="email"
+                       aria-describedby="email-feedback" required>
+                <span id="email-feedback" class="form-feedback"></span>
+            </div>
 
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password"
-                   name="confirmPassword"
-                   autocomplete="new-password" required>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       minlength="8" autocomplete="new-password"
+                       aria-describedby="password-feedback" required>
+                <span id="password-feedback" class="form-feedback"></span>
+            </div>
 
-            <button type="submit">Create Account</button>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password"
+                       name="confirmPassword" autocomplete="new-password"
+                       aria-describedby="confirm-password-feedback" required>
+                <span id="confirm-password-feedback" class="form-feedback"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Create Account</button>
+            </div>
         </form>
 
-        <p id="register-message" role="status"
-           aria-live="polite"></p>
+        <div id="register-message" class="form-feedback"
+             role="status" aria-live="polite"></div>
 
         <p>Already have an account?
             <a href="/login">Log In</a>
