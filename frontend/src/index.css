@@ -54,14 +54,14 @@ header{
 #search-input{
 	width: 100%;
 	padding: 14px 18px;
-	border: 1px solid #ccc;
+	border: 1px solid #C8DCFF;
 	border-radius: 8px;
 	font-size: 16px;
 	outline: none;
 }
 #search-input:focus{
 	border-color: #F15A22;
-	box-shadow: 0 0 4px rgba(181, 138, 54, 0.3);
+	box-shadow: 0 0 4px #DBB485;
 }
 
 .catalog-section{
@@ -77,14 +77,14 @@ header{
 
 #sort-books{
 	padding: 10px;
-	border: 1px solid #ccc;
+	border: 1px solid #C8DCFF;
 	border-radius: 6px;
 	background-color: white;
 	font-size: 14px;
 }
 
 .book-grid{
-	display: gris;
+	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 25px;
 }
@@ -100,11 +100,11 @@ header{
 	border-radius: 10px;
 	padding: 18px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0,08);
-	transition: transform, 0.2s, box-shadow 0.2s;
+	transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .book-card:hover{
-	transform: translate(-px);
+	transform: translate(-5px);
 	box-shadow: 0 5px 15ox rgba(0, 0, 0, 0,012);
 }
 .book-card img{
@@ -126,7 +126,7 @@ header{
 .book-price{
 	font-size: 18px;
 	font-weight: bold;
-	color: #a47722;
+	color: #DBB485;
 	margin: 12px 0;
 }
 
@@ -153,12 +153,12 @@ footer{
 	color: white;
 }
 @media (max-width: 650px){
-	.nevbar{
+	.navbar{
 		flex-direction: column;
 		gap: 15px;
 	}
 
-	;book-grid{
+	.book-grid{
 		grid-template-columns: repeat(2, 1fr);
 	}
 	.hero h2{
