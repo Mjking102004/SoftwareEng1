@@ -2,15 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Temp Website</title>
-    <link rel="icon" type="image/png" href="../../icon.png" />
+    <meta name="viewport" content="width=device-width, instal-scale=1.0" />
+    <title>Rowdy's temp Bookstore</title>
+    <link rel="icon" type="image/png" href="frontend/UTSA-Roadrunners-Logo.png" />
+    <link rel="stylesheet" href="/src/index.css">
   </head>
   <body>
-    <h1>Fullstack Connection Test</h1>
-    <input type="text" id="item-input" placeholder="Enter text..." />
-    <button id="submit-btn">Send to DB</button>
-    <ul id="item-list"></ul>
+    <!--Navigation-->
+    <header>
+        <nav class="navbar">
+          <h1 class="logo"> Rowdy's Bookstore</h1>
+          <div class="nav-links">
+            <a href="/">HOME</a>
+            <a href="#catalog">Books</a>
+            <a href="/cart.html">Cart (<span id="cart-count">0</span>)</a>
+          </div>
+      </nav>
+    </header>
+    <!--Home-Intro-->
+    <main>
+      <section class="hero">
+        <h2>Find Your Next Favorite Series</h2>
+        <h2>Explore our catalog and discover something new</h2>
+      </section>
 
+      <!--Search-->
+      <section class="search-section">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search books by title or description:"/>
+
+      </section>
+      <!--catalog-->
+      <section id="catalog" class="catalog-section">
+        <div class="catalogHeader">
+          <h2>Our Books</h2>
+          <select if="sort-books">
+            <option value="default">Sort By</option>
+            <option> value="price-low">Price: Low to High</option>
+            <option> value="price-high">Price: High to Low</option>
+            <option> value="availability">Availability</option>
+          </select>
+        </div>
+        <div id="book-list" class="book-grid">
+          
+        </div>
+      </section>
+    </main>
+    <footer>
+      <P>&copy; 2026 Rowdy's Bookstore</P>
+    </footer>
     <script type="module" src="/src/ui/indexUi.js"></script>
   </body>
 </html>
