@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Rowdy's Bookstore</title>
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main>
+        <h1>Log In</h1>
+        <p>Welcome back to Rowdy's Bookstore!</p>
+
+        <form id="login-form" novalidate>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                       autocomplete="email"
+                       aria-describedby="email-feedback" required>
+                <span id="email-feedback" class="form-feedback"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       autocomplete="current-password"
+                       aria-describedby="password-feedback" required>
+                <span id="password-feedback" class="form-feedback"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Log In</button>
+            </div>
+        </form>
+
+        <div id="login-message" class="form-feedback"
+             role="status" aria-live="polite"></div>
+
+        <p>Don't have an account?
+            <a href="/register">Create an Account</a>
+        </p>
+    </main>
+
+    <script type="module" src="/src/ui/loginUI.js"></script>
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+</body>
+</html>
