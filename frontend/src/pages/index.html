@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, instal-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rowdy's temp Bookstore</title>
     <link rel="icon" type="image/png" href="frontend/UTSA-Roadrunners-Logo.png" />
     <link rel="stylesheet" href="/src/index.css">
@@ -36,13 +36,13 @@
       </section>
       <!--catalog-->
       <section id="catalog" class="catalog-section">
-        <div class="catalogHeader">
+        <div class="catalog-header">
           <h2>Our Books</h2>
-          <select if="sort-books">
+          <select id="sort-books">
             <option value="default">Sort By</option>
-            <option> value="price-low">Price: Low to High</option>
-            <option> value="price-high">Price: High to Low</option>
-            <option> value="availability">Availability</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="availability">Availability</option>
           </select>
         </div>
         <div id="book-list" class="book-grid">
