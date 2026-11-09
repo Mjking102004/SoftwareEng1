@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account | Rowdy's Bookstore</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
     <header id="site-header"></header>
 
-    <main>
+    <main class="form-page">
         <h1>My Account</h1>
         <p>View and update your account information.</p>
 
@@ -19,23 +20,32 @@
 
         <h2>Personal Information</h2>
 
-        <form id="account-form">
+        <form id="account-form" novalidate>
             <div class="form-group">
                 <label for="first-name">First Name</label>
                 <input type="text" id="first-name" name="first_name"
-                       autocomplete="given-name" required>
+                       autocomplete="given-name"
+                       aria-describedby="first-name-feedback" required>
+                <span id="first-name-feedback"
+                      class="form-feedback" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
                 <label for="last-name">Last Name</label>
                 <input type="text" id="last-name" name="last_name"
-                       autocomplete="family-name" required>
+                       autocomplete="family-name"
+                       aria-describedby="last-name-feedback" required>
+                <span id="last-name-feedback"
+                      class="form-feedback" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email"
-                       autocomplete="email" required>
+                       autocomplete="email"
+                       aria-describedby="email-feedback" required>
+                <span id="email-feedback"
+                      class="form-feedback" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
@@ -49,7 +59,7 @@
         <h2>Order History</h2>
         <p>Order history will be available after integration.</p>
 
-        <p><a href="/home">Back to Bookstore</a></p>
+        <p><a href="/">Back to Bookstore</a></p>
     </main>
 
     <script type="module" src="/src/ui/accountUI.js"></script>
