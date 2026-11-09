@@ -32,7 +32,7 @@ header{
 	justify-content: space-between;
 	align-items: center;
 	gap: 15px;
-	flex-grow: wrap;
+	flex-wrap: wrap;
 }
 .logo {
 	font-size: 26px;
@@ -122,7 +122,7 @@ main{
 
 .book-card{
 	background-color: white;
-	border-radius: 10x;
+	border-radius: 10px;
 	padding: 18px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.012);
 	transition: transform 0.2s, box-shadow 0.2s;
