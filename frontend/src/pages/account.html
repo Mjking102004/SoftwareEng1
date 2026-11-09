@@ -5,52 +5,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account | Rowdy's Bookstore</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
     <header id="site-header"></header>
 
-    <main>
-        <h1>My Account</h1>
-        <p>View and update your account information.</p>
+    <main class="form-page account-page">
 
-        <p id="account-status" role="status">
-            Account information is not connected yet.
+        <!-- Account Heading -->
+        <div class="account-heading">
+            <div class="account-avatar" aria-hidden="true">👤</div>
+            <div>
+                <h1>My Account</h1>
+                <p>Manage your bookstore profile.</p>
+            </div>
+        </div>
+
+        <!-- Account Overview -->
+        <section class="account-overview">
+            <h2>Account Overview</h2>
+
+            <p id="account-status" role="status">
+                Account information is not connected yet.
+            </p>
+
+            <p id="account-welcome" hidden></p>
+            <p id="account-member-since" hidden></p>
+        </section>
+
+        <!-- Personal Information -->
+        <section class="account-details">
+            <h2>Personal Information</h2>
+            <p>View and update your name and email address.</p>
+
+            <form id="account-form" novalidate>
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first_name"
+                           autocomplete="given-name"
+                           aria-describedby="first-name-feedback" required>
+                    <span id="first-name-feedback"
+                          class="form-feedback" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last_name"
+                           autocomplete="family-name"
+                           aria-describedby="last-name-feedback" required>
+                    <span id="last-name-feedback"
+                          class="form-feedback" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email"
+                           autocomplete="email"
+                           aria-describedby="email-feedback" required>
+                    <span id="email-feedback"
+                          class="form-feedback" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Update Account</button>
+                </div>
+            </form>
+
+            <div id="account-message" class="form-feedback"
+                 role="status" aria-live="polite"></div>
+        </section>
+
+        <p class="account-back">
+            <a href="/">Back to Bookstore</a>
         </p>
-
-        <h2>Personal Information</h2>
-
-        <form id="account-form">
-            <div class="form-group">
-                <label for="first-name">First Name</label>
-                <input type="text" id="first-name" name="first_name"
-                       autocomplete="given-name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" name="last_name"
-                       autocomplete="family-name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email"
-                       autocomplete="email" required>
-            </div>
-
-            <div class="form-group">
-                <button type="submit">Update Account</button>
-            </div>
-        </form>
-
-        <div id="account-message" class="form-feedback"
-             role="status" aria-live="polite"></div>
-
-        <h2>Order History</h2>
-        <p>Order history will be available after integration.</p>
-
-        <p><a href="/home">Back to Bookstore</a></p>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Rowdy's Bookstore</p>
+    </footer>
 
     <script type="module" src="/src/ui/accountUI.js"></script>
     <script type="module" src="/src/ui/navigationUI.js"></script>

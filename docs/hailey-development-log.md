@@ -184,3 +184,106 @@ November 7, 2026 - Frontend Improvements
 - Implement server-side validation, password hashing, and authentication.
 - Connect account management to PostgreSQL.
 - Complete integration and end-to-end testing.
+
+
+
+November 8, 2026 - Frontend Integration and UI Improvements
+
+1. Shared Styling
+
+- Imported the shared stylesheet from Abraham's development branch.
+- Corrected invalid CSS properties and removed duplicated rules.
+- Updated the navbar styling using the bookstore's navy and orange color scheme.
+- Added reusable styling for registration, login, and account management pages.
+- Improved form spacing and reduced unnecessary vertical scrolling.
+- Placed First Name and Last Name fields side by side on larger screens.
+- Added responsive styling for smaller screens.
+
+2. Reusable Navigation
+
+- Expanded navigationUI.js to create a shared navigation bar.
+- Integrated the UTSA Roadrunners logo and bookstore name.
+- Added Home, Browse Books, Login, Register, My Account, and Cart links.
+- Added a navigation search bar that submits a search query.
+- Improved navbar spacing, alignment, and responsiveness.
+- Centralized navigation generation instead of hardcoding it on individual pages.
+
+3. Homepage Integration
+
+- Imported Abraham's bookstore homepage into index.html.
+- Replaced the hardcoded homepage navigation with navigationUI.js.
+- Preserved the homepage introduction, book catalog container, and sorting dropdown.
+- Removed the duplicate homepage search input in favor of the shared navigation search bar.
+- Removed the original connection test from the homepage.
+- Updated the Back to Bookstore link to point to the main homepage.
+- Retired the temporary home.html page after verifying the new homepage.
+
+4. Form Validation and Layout
+
+- Improved the account management validation to display individual feedback messages.
+- Added validation on blur when users leave input fields.
+- Added custom error messages underneath invalid fields.
+- Improved red and green input border visibility.
+- Disabled the browser's default form validation popups where custom validation is used.
+- Preserved existing registration and login validation functionality.
+- Maintained separate first and last name fields across registration and account management.
+
+5. Testing
+
+- Rebuilt and ran the frontend through Docker Compose.
+- Verified that the main bookstore homepage loads correctly.
+- Tested the shared navigation and page links.
+- Verified the Roadrunners logo displays correctly.
+- Tested registration, login, and account form validation.
+- Confirmed that validation errors display underneath the appropriate inputs.
+- Confirmed that the updated form layouts display correctly.
+- Verified that navigation and validation continue working after homepage integration.
+
+6. Current Limitations
+
+- Registration and login are not connected to backend authentication.
+- Account management does not retrieve or save customer information.
+- The homepage book catalog is not connected to bookstore inventory.
+- Search submits a query but does not filter actual books yet.
+- Sorting and cart functionality still require integration.
+- Navigation does not yet change based on authentication status.
+- The backend database connection test code remains available in the repository history.
+
+7. Next Steps
+
+- Coordinate remaining homepage and catalog functionality with Abraham.
+- Confirm Jonathan's database schema implementation.
+- Coordinate authentication routes and controllers with Kingston.
+- Implement backend registration, login, and account management.
+- Connect the frontend forms to the backend APIs.
+- Complete integration testing with the team's other features.
+
+8. Final Frontend Adjustments
+
+Footer and Shared Styling
+- Added matching footers to the registration, login, and account pages.
+- Updated the shared footer CSS to keep the footer at the bottom of shorter pages.
+- Removed duplicate account-specific CSS rules to avoid conflicting styles.
+- Preserved the existing shared navigation and bookstore color scheme.
+
+Email Validation
+- Updated email validation across registration, login, and account management.
+- Added a regular expression requiring an email domain containing a period.
+- Preserved existing field-level validation, error messages, and visual feedback.
+- Confirmed that email validation checks formatting only and does not verify email ownership.
+
+Account Management Redesign
+- Improved the account page layout with separate Account Overview and Personal Information sections.
+- Added a profile heading and avatar placeholder.
+- Preserved editable first name, last name, and email fields.
+- Removed the unused order history placeholder to focus on assigned account-management requirements.
+- Prepared hidden welcome-message and membership-date elements for future backend integration.
+- Kept existing form validation and submission behavior unchanged.
+
+Testing and Remaining Work
+- Rebuilt the frontend using Docker Compose.
+- Verified the updated footer positioning and account-page layout in the browser.
+- Tested updated email validation.
+- Backend registration, login, account retrieval, account updates, authentication, and logout remain pending.
+- Server-side validation, password hashing, and duplicate-email handling will be implemented during Sprint 2.
+- Account Overview will display actual customer information once backend integration is complete.
