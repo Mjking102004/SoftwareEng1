@@ -555,3 +555,36 @@ footer {
     color: #032044;
     font-weight: 600;
 }
+
+/* Admin Dashboard */
+
+.admin-page{
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.admin-page h1{
+    color: #032044;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.admin-page > p{
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.admin-card{
+    background-color: white;
+    border: 1px solid #E5E8EE;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.admin-card h2{
+    color: #032044;
+    margin-bottom: 12px;
+}
