@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const routes = require('./routes');
+const adminRoutes = require('./adminRoutes');
 
 const app = express();
 const PORT = 5000;
@@ -13,3 +14,4 @@ app.use('/api', routes);
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend running on port ${PORT}`);
 });
+app.use('/api/admin', adminRoutes);
