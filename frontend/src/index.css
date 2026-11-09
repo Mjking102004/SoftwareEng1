@@ -588,3 +588,25 @@ footer {
     color: #032044;
     margin-bottom: 12px;
 }
+
+.admin-card > div{
+    overflow-x: auto;
+}
+
+.admin-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td{
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #E5E8EE;
+}
+
+.admin-table th{
+    background-color: #E9EFF6;
+    color: #032044;
+}
