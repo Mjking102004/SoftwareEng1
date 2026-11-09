@@ -276,7 +276,7 @@ main {
 footer {
     text-align: center;
     padding: 25px;
-    margin-top: 50px;
+    margin-top: auto;
     background-color: #032044;
     color: white;
     flex-shrink: 0;
@@ -468,4 +468,90 @@ footer {
     #account-form {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+/* My Account Page */
+
+.form-page.account-page {
+    max-width: 700px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Account Header */
+
+.account-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.account-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #E9EFF6;
+    font-size: 27px;
+}
+
+.account-heading h1 {
+    margin-bottom: 5px;
+}
+
+.account-heading p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* Account Cards */
+
+.account-overview,
+.account-details {
+    background-color: white;
+    border: 1px solid #E5E8EE;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.account-overview {
+    margin-bottom: 20px;
+}
+
+.account-overview h2,
+.account-details h2 {
+    color: #032044;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.account-overview p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.account-details > p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Account Navigation */
+
+.account-back {
+    margin-top: 22px;
+    margin-bottom: 0;
+}
+
+.account-back a {
+    color: #032044;
+    font-weight: 600;
 }

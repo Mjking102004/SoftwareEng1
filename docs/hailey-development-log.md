@@ -257,3 +257,33 @@ November 8, 2026 - Frontend Integration and UI Improvements
 - Implement backend registration, login, and account management.
 - Connect the frontend forms to the backend APIs.
 - Complete integration testing with the team's other features.
+
+8. Final Frontend Adjustments
+
+Footer and Shared Styling
+- Added matching footers to the registration, login, and account pages.
+- Updated the shared footer CSS to keep the footer at the bottom of shorter pages.
+- Removed duplicate account-specific CSS rules to avoid conflicting styles.
+- Preserved the existing shared navigation and bookstore color scheme.
+
+Email Validation
+- Updated email validation across registration, login, and account management.
+- Added a regular expression requiring an email domain containing a period.
+- Preserved existing field-level validation, error messages, and visual feedback.
+- Confirmed that email validation checks formatting only and does not verify email ownership.
+
+Account Management Redesign
+- Improved the account page layout with separate Account Overview and Personal Information sections.
+- Added a profile heading and avatar placeholder.
+- Preserved editable first name, last name, and email fields.
+- Removed the unused order history placeholder to focus on assigned account-management requirements.
+- Prepared hidden welcome-message and membership-date elements for future backend integration.
+- Kept existing form validation and submission behavior unchanged.
+
+Testing and Remaining Work
+- Rebuilt the frontend using Docker Compose.
+- Verified the updated footer positioning and account-page layout in the browser.
+- Tested updated email validation.
+- Backend registration, login, account retrieval, account updates, authentication, and logout remain pending.
+- Server-side validation, password hashing, and duplicate-email handling will be implemented during Sprint 2.
+- Account Overview will display actual customer information once backend integration is complete.

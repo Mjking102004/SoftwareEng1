@@ -25,10 +25,14 @@ function showFeedback(input, feedbackId, isValid, errorMessage) {
     return isValid;
 }
 
-// Validate the email address.
+ // Validate the email address.
 function checkEmail() {
-    const isValid = email.value.trim() !== '' &&
-                    email.checkValidity();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const value = email.value.trim();
+
+    const isValid = value !== '' &&
+                    email.checkValidity() &&
+                    emailPattern.test(value);
 
     return showFeedback(email, 'email-feedback',
         isValid, 'Please enter a valid email address.');
