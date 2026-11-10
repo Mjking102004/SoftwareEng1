@@ -582,6 +582,7 @@ footer {
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    scroll-margin-top: 20px;
 }
 
 .admin-card h2{
@@ -660,4 +661,34 @@ footer {
 .admin-delete:hover{
     background-color: #C62828;
     color: white;
+}
+
+.admin-actions{
+    display: flex;
+    gap: 8px;
+}
+
+.admin-edit{
+    padding: 6px 12px;
+    background-color: white;
+    color: #032044;
+    border: 1px solid #032044;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.admin-edit:hover{
+    background-color: #032044;
+    color: white;
+}
+
+.admin-form #book-cancel{
+    margin-top: 8px;
+    background-color: white;
+    color: #032044;
+    border: 1px solid #032044;
+}
+
+.admin-form #book-cancel:hover{
+    background-color: #E9EFF6;
 }

@@ -14,6 +14,16 @@ export async function createBook(book){
     return response.json();
 }
 
+//update a book
+export async function updateBook(id, book){
+    const response = await fetch(`/api/admin/books/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(book),
+    });
+    return response.json();
+}
+
 //delete book
 export async function deleteBook(id){
     const response = await fetch(`/api/admin/books/${id}`, {

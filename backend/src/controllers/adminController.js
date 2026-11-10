@@ -31,6 +31,27 @@ const createBook = async (req, res) => {
     }
 };
 
+//update a book
+const updateBook = async (req, res) => {
+    try{
+        const {title, author, description, price, quantity, image_url, category_id} = req.body;
+        const result = await pool.query(
+            `UPDATE books
+             SET title = $1, author = $2, description = $3, price = $4, quantity = $5,
+             image_url = $6, category_id = $7
+             WHERE book_id = $8
+             RETURNING *`,
+            [title, author, description || null, price, quantity, image_url || null, category_id || null, req.params.id]
+        );
+        if(result.rows.length === 0){
+            return res.status(404).json({error: "Book not found."});
+        }
+        res.status(200).json(result.rows[0]);
+    }catch (err){
+        res.status(500).json({error: err.message});
+    }
+};
+
 //delete a book
 const deleteBook = async (req, res) => {
     try{
@@ -51,4 +72,4 @@ const getCategories = async (req, res) => {
     }
 };
 
-module.exports = {getBooks, createBook, deleteBook, getCategories};
+module.exports = {getBooks, createBook, updateBook, deleteBook, getCategories};
