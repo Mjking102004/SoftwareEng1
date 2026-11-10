@@ -79,6 +79,15 @@ if (header) {
         const anchor = document.createElement('a');
         anchor.textContent = link.text;
         anchor.href = link.href;
+        //show num of items in cart
+        if(link.text == 'Cart'){
+            anchor.textContent = 'Cart(';
+            const count  = document.createElement('span');
+            count.id = document.createElement('span');
+            count.textContent ='0';
+            anchor.appendChild(count);
+            anchor.appendChild(document.createTextNode(')'));
+        }
 
         accountLinks.appendChild(anchor);
     });

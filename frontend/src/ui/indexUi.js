@@ -21,7 +21,9 @@ button.addEventListener('click', async () => {
   await renderList();
 });
 
-renderList();-> */
+renderList();*/
+import { addToCart, getCartItemQuantity } from './cartStore.js';
+
 const books =[{
   id:1, title:"The Great Gatsby", author: "F. Scott Fitzgerald", 
   description: "A classic novel about wealth, love, and the American dream.",
@@ -36,15 +38,13 @@ const books =[{
   price: 20.99, sales_price: 14.99, quantity: 8, image_url: "https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg"
 }];
 
-const searchInput = document.getElementById('search-inpu');
+const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort-books');
-const bookList = document.getElementById('cart-count');
-
-let cartItems = 0;
+const bookList = document.getElementById('book-list');
 
 function renderBooks(bookArray){
   bookList.innerHTML = '';
-  if(bookArray.length ==0){
+  if(bookArray.length == 0){
     bookList.textContent = 'No Books Found';
     return;
   }
@@ -53,7 +53,7 @@ function renderBooks(bookArray){
     card.classList.add("book-card");
     const image = document.createElement('img');
     image.src = book.image_url;
-    image.alt = book.title + 'cover';
+    image.alt = book.title + ' cover';
     image.onerror = () => {
       image.alt = 'Book cover unavailable';
       image.removeAttribute('src');
@@ -61,13 +61,17 @@ function renderBooks(bookArray){
     const title = document.createElement('h3');
     title.textContent = book.title;
     const author = document.createElement('p')
-    author.textContent = 'By' + book.author;
+    author.textContent = 'By ' + book.author;
     const description = document.createElement('p');
     description.textContent = book.description;
     const price = document.createElement('p');
     price.classList.add('book-price');
-    if (book.sales_price !== null){
-      price.textContent ='$'+book.price.toFixed(2);
+    if (book.sales_price != null){
+      const original = document.createElement('span');
+      original.classList.add('original-price');
+      original.textContent = '$' + book.price.toFixed(2);
+      price.appendChild(original);
+      price.appendChild(document.createTextNode('$' + book.sales_price.toFixed(2)));
     }else{
       price.textContent = '$' + book.price.toFixed(2);
     }
@@ -75,13 +79,36 @@ function renderBooks(bookArray){
     quantity.textContent = 'Available: ' + book.quantity;
     const button = document.createElement('button');
     button.classList.add('add-to-cart');
-    button.textContent = book.quantity > 0 ? 'Add to Cart': 'Out of Stock';
-    button.disabled = book.quantity <= 0;
 
-    button.addEventListener('clivk', ()=>{
-      cartItems++;
-      cartCount.textContent = cartItems;
+    // Disable the button when out of stock or when the cart already holds all copies.
+    function refreshButton(){
+      const inCart = getCartItemQuantity(book.id);
+      if (book.quantity <= 0){
+        button.textContent = 'Out of Stock';
+        button.disabled = true;
+      }else if (inCart >= book.quantity){
+        button.textContent = 'Max in Cart';
+        button.disabled = true;
+      }else{
+        button.textContent = inCart > 0 ? 'Add Another (' + inCart + ' in cart)' : 'Add to Cart';
+        button.disabled = false;
+      }
+    }
+    refreshButton();
+
+    button.addEventListener('click', ()=>{
+      const result = addToCart(book);
+      if (!result.ok){
+        button.textContent = result.message;
+        setTimeout(refreshButton, 1500);
+        return;
+      }
       button.textContent = 'Added!';
+      button.classList.add('added');
+      setTimeout(() => {
+        button.classList.remove('added');
+        refreshButton();
+      }, 1000);
     });
     card.appendChild(image)
     card.appendChild(title)
@@ -94,7 +121,8 @@ function renderBooks(bookArray){
   });
 }
 function searchBooks(){
-  const filterBooks = books.filter((books) =>{
+  const searchText = searchInput.value.toLowerCase();
+  const filterBooks = books.filter((book) =>{
     return(
       book.title.toLowerCase().includes(searchText) ||
       book.author.toLowerCase().includes(searchText) ||
@@ -105,18 +133,19 @@ function searchBooks(){
 }
 
 function sortBooks(bookArray){
-  const sortValue = sortSelect.nodeValue;
+  const sortValue = sortSelect.value;
 
   if(sortValue == 'price-low'){
-    bookArray.sort((a,b) => (a.sale_price ?? a.price) - (b.sale_price ?? b.price));
+    bookArray.sort((a,b) => (a.sales_price ?? a.price) - (b.sales_price ?? b.price));
   }else if (sortValue == 'price-high'){
-    bookArray.sort((a,b) => (b.sale_price ?? b.price) - (a.sale_price ?? a.price));
+    bookArray.sort((a,b) => (b.sales_price ?? b.price) - (a.sales_price ?? a.price));
   }else if(sortValue == 'availability'){
     bookArray.sort((a, b) => b.quantity - a.quantity);
   }
   renderBooks(bookArray);
 }
 searchInput.addEventListener('input', searchBooks);
-searchInput.addEventListener('change', searchBooks);
+sortSelect.addEventListener('change', searchBooks);
+
 
 renderBooks(books)
