@@ -55,7 +55,6 @@ const getCategories = async (req, res) => {
 const { HttpError, asyncHandler } = require('../utils/http');
 const { positiveInteger, nonnegativeMoney, trimmedString, assertFields } = require('../utils/validation');
 
-router.use(requireAuth, requireAdmin);
 
 const bookFields = ['title','author','description','price','quantity','image_url','category_id'];
 function parseBook(body, existing = null) {
