@@ -1,13 +1,17 @@
 {
-  "name": "backend",
+  "name": "rowdys-bookstore-backend",
   "version": "1.0.0",
+  "private": true,
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "check": "node --check src/server.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
     "express": "^4.19.2",
+    "express-session": "^1.18.2",
     "pg": "^8.11.5"
   }
 }
