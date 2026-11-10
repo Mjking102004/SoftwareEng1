@@ -647,3 +647,17 @@ footer {
     font-family: inherit;
     background-color: white;
 }
+
+.admin-delete{
+    padding: 6px 12px;
+    background-color: white;
+    color: #C62828;
+    border: 1px solid #C62828;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.admin-delete:hover{
+    background-color: #C62828;
+    color: white;
+}

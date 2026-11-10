@@ -14,6 +14,14 @@ export async function createBook(book){
     return response.json();
 }
 
+//delete book
+export async function deleteBook(id){
+    const response = await fetch(`/api/admin/books/${id}`, {
+        method: 'DELETE',
+    });
+    return response.json();
+}
+
 //get all categories
 export async function fetchCategories(){
     const response = await fetch('/api/admin/categories');

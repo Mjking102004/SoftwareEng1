@@ -31,6 +31,16 @@ const createBook = async (req, res) => {
     }
 };
 
+//delete a book
+const deleteBook = async (req, res) => {
+    try{
+        await pool.query("DELETE FROM books WHERE book_id = $1", [req.params.id]);
+        res.status(200).json({message: 'Book deleted.'});
+    }catch (err){
+        res.status(500).json({error: err.message});
+    }
+};
+
 //get all categories
 const getCategories = async (req, res) => {
     try{
@@ -41,4 +51,4 @@ const getCategories = async (req, res) => {
     }
 };
 
-module.exports = {getBooks, createBook, getCategories};
+module.exports = {getBooks, createBook, deleteBook, getCategories};
