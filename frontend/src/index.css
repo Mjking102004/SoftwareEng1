@@ -1,663 +1,215 @@
+/*Styling*/
 
-/* General Styling */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-html,
-body {
-    height: 100%;
+html, body{
+	height: 100%
+}
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f8f7f4;
+	color: #252525;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #F8F7F4;
-    color: #252525;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+header{
+	background-color: #032044;
+	color: white;
 }
 
-/* Header and Navigation */
-
-header {
-    background-color: #032044;
-    color: white;
+.navbar{
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
 }
-
-
-.navbar {
-    width: 100%;
-    max-width: 1400px;
-    min-height: 75px;
-    margin: 0 auto;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
 .logo {
-    font-size: 26px;
-    font-weight: bold;
-    color: #F15A22;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+	font-size: 26px;
+	color: #F15A22;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
-.logo img {
-    height: 40px;
-    width: auto;
-    display: block;
+.logo img{
+	height: 40px;
+	width: auto;
+	display: block;
 }
 
-
-.nav-links,
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-}
-
-.nav-links a,
-.nav-actions a {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-    transition: color 0.2s;
-}
-
-.nav-links a:hover,
-.nav-links a:focus-visible,
-.nav-actions a:hover,
-.nav-actions a:focus-visible {
-    color: #F15A22;
-    text-decoration: underline;
-}
-
-
-/* Navigation Search Bar */
-
-.nav-search {
-    display: flex;
-    flex: 1 1 220px;
-    max-width: 400px;
-    min-width: 180px;
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.nav-search input {
-    width: 100%;
-    min-width: 0;
-    padding: 12px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    font-family: inherit;
-}
-
-.nav-search:focus-within {
-    outline: 2px solid #F15A22;
-}
-
-.nav-search button {
-    padding: 12px 16px;
-    background-color: #F15A22;
-    color: white;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.nav-search button:hover {
-    background-color: #C94715;
-}
-
-@media (max-width: 650px) {
-    .nav-search {
-        flex: none;
-        width: 100%;
-        max-width: 420px;
-    }
-
-    .nav-links,
-    .nav-actions {
-        justify-content: center;
-    }
-}
-
-/* Main Content */
-
-main {
-    flex: 1 0 auto;
-    width: 100%;
-}
-
-/* Homepage Hero Section */
-
-.hero {
-    text-align: center;
-    padding: 40px 20px 10px;
-}
-
-.hero h2 {
-    font-size: 36px;
-    margin-bottom: 15px;
-    color: #032044;
-}
-
-/* Search Section */
-
-.search-section {
-    max-width: 700px;
-    margin: 35px auto;
-    padding: 0 20px;
-}
-
-#search-input {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1px solid #C8DCFF;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
-}
-
-#search-input:focus {
-    border-color: #F15A22;
-    box-shadow: 0 0 4px #DBB485;
-}
-
-/* Book Catalog */
-
-.catalog-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    width: 100%;
-}
-
-.catalog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-#sort-books {
-    padding: 10px;
-    border: 1px solid #C8DCFF;
-    border-radius: 6px;
-    background-color: white;
-    font-size: 14px;
-}
-
-.book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
-}
-
-/* Book Cards */
-
-.book-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    flex-direction: column;
-}
-
-.book-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-}
-
-.book-card img {
-    width: 100%;
-    height: 230px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.book-card h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: #032044;
-}
-
-.book-card p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
-}
-
-.book-price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #DBB485;
-    margin: 12px 0;
-    margin-top: auto;
-}
-
-/* Add to Cart Button */
-
-.add-to-cart {
-    width: 100%;
-    padding: 11px;
-    background-color: #C8DCFF;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-}
-
-.add-to-cart:hover {
-    background-color: #032044;
-}
-
-/* Footer */
-
-footer {
-    text-align: center;
-    padding: 25px;
-    margin-top: auto;
-    background-color: #032044;
-    color: white;
-    flex-shrink: 0;
-    width: 100%;
-}
-
-/* Responsive Design */
-
-@media (max-width: 650px) {
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .book-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .hero h2 {
-        font-size: 28px;
-    }
-}
-
-@media (max-width: 400px) {
-    .catalog-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-}
-
-
-/* Registration, Login, and Account Pages */
-
-.form-page {
-    flex: 0 0 auto;
-    width: calc(100% - 32px);
-    max-width: 550px;
-    margin: 40px auto;
-    padding: 35px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.form-page h1 {
-    color: #032044;
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
-.form-page h2 {
-    color: #032044;
-    font-size: 22px;
-    margin-top: 25px;
-    margin-bottom: 15px;
-}
-
-.form-page p {
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
-
-.form-page a {
-    color: #032044;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.form-page a:hover {
-    color: #F15A22;
-    text-decoration: underline;
-}
-
-
-/* First and Last Name Layout */
-
-#register-form,
-#account-form {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 16px;
-}
-
-#register-form > .form-group:nth-child(n+3),
-#account-form > .form-group:nth-child(n+3) {
-    grid-column: 1 / -1;
-}
-
-/* Form Groups */
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #032044;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 3px solid #C8DCFF;
-    border-radius: 6px;
-    font-size: 16px;
-    font-family: inherit;
-}
-
-.form-group input:focus {
-    border-color: #F15A22;
-    outline: 2px solid #F15A22;
-    outline-offset: 1px;
-}
-
-/* Validation Feedback */
-
-.form-feedback {
-    display: block;
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-.form-group .form-feedback:not(:empty) {
-    margin-top: 6px;
-}
-
-.form-group.has-error input {
-    border-color: #C62828;
-}
-
-.form-group.has-error .form-feedback {
-    color: #C62828;
-    font-weight: 500;
-}
-
-.form-group.has-success input {
-    border-color: #2E7D32;
-}
-
-.form-group.has-success .form-feedback {
-    color: #2E7D32;
-    font-weight: 500;
-}
-
-/* Form Buttons */
-
-.form-page button[type="submit"] {
-    width: 100%;
-    padding: 13px;
-    background-color: #F15A22;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.form-page button[type="submit"]:hover {
-    background-color: #C94715;
-}
-
-.form-page button[type="submit"]:focus-visible {
-    outline: 3px solid #032044;
-    outline-offset: 3px;
-}
-
-/* Responsive Form Layout */
-
-@media (max-width: 600px) {
-    .form-page {
-        margin: 20px auto;
-        padding: 20px;
-    }
-
-    .form-page h1 {
-        font-size: 26px;
-    }
-}
-
-/* Responsive Name Fields */
-
-@media (max-width: 600px) {
-    #register-form,
-    #account-form {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-
-/* My Account Page */
-
-.form-page.account-page {
-    max-width: 700px;
-    padding: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-/* Account Header */
-
-.account-heading {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 24px;
-}
-
-.account-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 55px;
-    height: 55px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background-color: #E9EFF6;
-    font-size: 27px;
-}
-
-.account-heading h1 {
-    margin-bottom: 5px;
-}
-
-.account-heading p {
-    color: #666;
-    margin-bottom: 0;
-}
-
-/* Account Cards */
-
-.account-overview,
-.account-details {
-    background-color: white;
-    border: 1px solid #E5E8EE;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-.account-overview {
-    margin-bottom: 20px;
-}
-
-.account-overview h2,
-.account-details h2 {
-    color: #032044;
-    margin-top: 0;
-    margin-bottom: 12px;
-}
-
-.account-overview p {
-    color: #555;
-    font-size: 14px;
-    margin-bottom: 6px;
-}
-
-.account-details > p {
-    color: #666;
-    margin-bottom: 20px;
-}
-
-/* Account Navigation */
-
-.account-back {
-    margin-top: 22px;
-    margin-bottom: 0;
-}
-
-.account-back a {
-    color: #032044;
-    font-weight: 600;
-}
-
-/* Admin Dashboard */
-
-.admin-page{
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.admin-page h1{
-    color: #032044;
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
-.admin-page > p{
-    color: #666;
-    margin-bottom: 24px;
-}
-
-.admin-card{
-    background-color: white;
-    border: 1px solid #E5E8EE;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-.admin-card h2{
-    color: #032044;
-    margin-bottom: 12px;
-}
-
-.admin-card > div{
-    overflow-x: auto;
-}
-
-.admin-table{
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-.admin-table th,
-.admin-table td{
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid #E5E8EE;
-}
-
-.admin-table th{
-    background-color: #E9EFF6;
-    color: #032044;
-}
-
-.admin-form{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    column-gap: 16px;
-    align-items: end;
-}
-
-.admin-form button{
-    width: 100%;
-    padding: 12px;
-    background-color: #F15A22;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.admin-form button:hover{
-    background-color: #C94715;
-}
-
-#book-message{
-    margin-bottom: 15px;
-}
-
-.admin-form select{
-    width: 100%;
-    padding: 12px;
-    border: 3px solid #C8DCFF;
-    border-radius: 6px;
-    font-size: 16px;
-    font-family: inherit;
-    background-color: white;
-}
-
-.admin-delete{
-    padding: 6px 12px;
-    background-color: white;
-    color: #C62828;
-    border: 1px solid #C62828;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.admin-delete:hover{
-    background-color: #C62828;
-    color: white;
+.nav-links{
+	display: flex;
+	gap: 25px;
+	flex-wrap: wrap;
+}
+
+.nav-links a{
+	color: white;
+	text-decoration: none;
+	font-size: 16px;
+	transition: color 0.2s;
+}
+
+main{
+	flex: 1 0 auto;
+	width: 100%;
+}
+.hero{
+	text-align: center;
+	padding: 40px 20px 10px;
+}
+.hero h2{
+	font-size: 36px;
+	margin-bottom: 15px;
+	color: #032044;
+}
+
+.search-section{
+	max-width: 700px;
+	margin: 35px auto;
+	padding: 0 20px;
+}
+#search-input{
+	width: 100%;
+	padding: 14px 18px;
+	border: 1px solid #C8DCFF;
+	border-radius: 8px;
+	font-size: 16px;
+	outline: none;
+}
+#search-input:focus{
+	border-color: #F15A22;
+	box-shadow: 0 0 4px #DBB485;
+}
+
+.catalog-section{
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+	width: 100%;
+}
+.catalog-header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom:25px;
+}
+
+#sort-books{
+	padding: 10px;
+	border: 1px solid #C8DCFF;
+	border-radius: 6px;
+	background-color: white;
+	font-size: 14px;
+}
+
+.book-grid{
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 25px;
+}
+
+.book-card{
+	background-color: white;
+	border-radius: 10px;
+	padding: 18px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.012);
+	transition: transform 0.2s, box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+}
+
+.book-card:hover{
+	background-color: white;
+	border-radius: 10px;
+	padding: 18px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: transform 0.2s, box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+}
+
+.book-card:hover{
+	transform: translateY(-5px);
+	box-shadow: 0 5px 15ox rgba(0, 0, 0, 0.012);
+}
+.book-card img{
+	width: 100%;
+	height: 230px;
+	object-fit: contain;
+	margin-bottom: 15px;
+}
+.book-card h3{
+	font-size: 18px;
+	margin-bottom: 8px;
+	color: #032044;
+}
+.book-card p{
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 8px;
+}
+.book-price{
+	font-size: 18px;
+	font-weight: bold;
+	color: #DBB485;
+	margin: 12px 0;
+	margin-top: auto;
+}
+
+.add-to-cart{
+	width:100%;
+	padding:11px;
+	background-color: #C8DCFF;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.2s;
+}
+
+.add-to-cart:hover{
+	background-color: #032044;
+}
+
+footer{
+	text-align: center;
+	padding: 25px;
+	margin-top: 50px;
+	background-color: #032044;
+	color: white;
+	flex-shrink:0;
+	width: 100%;
+}
+@media (max-width: 650px){
+	.navbar{
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.book-grid{
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.hero h2{
+		font-size: 28px;
+	}
+}
+@media (max-width: 400px){
+	.catalog-header{
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 15px;
+	}
 }
