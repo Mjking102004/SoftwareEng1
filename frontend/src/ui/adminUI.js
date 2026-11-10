@@ -1,6 +1,9 @@
-import {fetchBooks} from '../server/adminServer.js';
+import {fetchBooks, createBook, fetchCategories} from '../server/adminServer.js';
 
 const booksContainer = document.getElementById('admin-books');
+const addBookForm = document.getElementById('add-book-form');
+const bookMessage = document.getElementById('book-message');
+const categorySelect = document.getElementById('book-category');
 
 //build a table froma list of rows and the columns to show
 function createTable(rows, columns){
@@ -44,4 +47,34 @@ async function renderBooks(){
     ]));
 }
 
+//fill the category dropdown
+async function renderCategories(){
+    const categories = await fetchCategories();
+
+    categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.category_id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
+}
+
 renderBooks();
+renderCategories();
+
+//add a book when the form is submitted
+addBookForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const book = Object.fromEntries(new FormData(addBookForm));
+    const result = await createBook(book);
+
+    if (result.error) {
+        bookMessage.textContent = result.error;
+        return;
+    }
+
+    bookMessage.textContent = `Added "${result.title}".`;
+    addBookForm.reset();
+    renderBooks();
+});
