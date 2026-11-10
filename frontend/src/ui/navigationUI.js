@@ -1,3 +1,4 @@
+import { refreshCartBadge } from './cartStore.js';
 
 const header = document.getElementById('site-header');
 
@@ -52,9 +53,10 @@ if (header) {
     const searchInput = document.createElement('input');
     searchInput.type = 'search';
     searchInput.name = 'q';
-    searchInput.placeholder = 'Search books, authors, or ISBN...';
+    searchInput.placeholder = 'Search by title, author, or description...';
     searchInput.setAttribute('aria-label', 'Search books');
     searchInput.required = true;
+    searchInput.value = new URLSearchParams(window.location.search).get('q') || '';
 
     const searchButton = document.createElement('button');
     searchButton.type = 'submit';
@@ -79,12 +81,12 @@ if (header) {
         const anchor = document.createElement('a');
         anchor.textContent = link.text;
         anchor.href = link.href;
-        //show num of items in cart
-        if(link.text == 'Cart'){
-            anchor.textContent = 'Cart(';
-            const count  = document.createElement('span');
-            count.id = document.createElement('span');
-            count.textContent ='0';
+        // Show the number of items in the cart next to the Cart link.
+        if (link.text === 'Cart') {
+            anchor.textContent = 'Cart (';
+            const count = document.createElement('span');
+            count.id = 'cart-count';
+            count.textContent = '0';
             anchor.appendChild(count);
             anchor.appendChild(document.createTextNode(')'));
         }
@@ -96,4 +98,5 @@ if (header) {
 
     // Add the completed navigation to the page.
     header.appendChild(nav);
+    refreshCartBadge();
 }

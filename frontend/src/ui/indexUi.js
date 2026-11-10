@@ -1,151 +1,147 @@
-/*import { fetchItems, createItem } from '../server/indexServer.js';
+import { fetchBooks } from '../server/bookServer.js';
+import { addToCart, formatPrice } from './cartStore.js';
 
-const input = document.getElementById('item-input');
-const button = document.getElementById('submit-btn');
-const list = document.getElementById('item-list');
-
-async function renderList() {
-  const items = await fetchItems();
-  list.innerHTML = '';
-  items.forEach((item) => {
-    const li = document.createElement('li');
-    li.textContent = `${item.id}: ${item.temp_text}`;
-    list.appendChild(li);
-  });
-}
-
-button.addEventListener('click', async () => {
-  if (!input.value.trim()) return;
-  await createItem(input.value.trim());
-  input.value = '';
-  await renderList();
-});
-
-renderList();*/
-import { addToCart, getCartItemQuantity } from './cartStore.js';
-
-const books =[{
-  id:1, title:"The Great Gatsby", author: "F. Scott Fitzgerald", 
-  description: "A classic novel about wealth, love, and the American dream.",
-  price: 14.99, sales_price: 11.99, quantity: 8, image_url: "https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg"
-},{
-  id:2, title:"1984", author: "George Orwell",
-  description: "A dystopian novel about government surveillance and control.",
-  price: 12.99, sales_price: 9.99, quantity: 3, image_url: "https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg"
-},{
-  id:3, title:"The Hobit", author: "J.R.R. Tolkien",
-  description: "An adventure through middle earth",
-  price: 20.99, sales_price: 14.99, quantity: 8, image_url: "https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg"
-}];
-
-const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort-books');
 const bookList = document.getElementById('book-list');
+const statusLine = document.getElementById('catalog-status');
 
-function renderBooks(bookArray){
-  bookList.innerHTML = '';
-  if(bookArray.length == 0){
-    bookList.textContent = 'No Books Found';
-    return;
+// The search text comes from the shared navbar
+const searchText = (new URLSearchParams(window.location.search).get('q') || '').trim();
+
+let allBooks = [];
+
+function stockText(book) {
+  if (book.quantity <= 0) return 'Out of stock';
+  if (book.quantity <= 5) return 'Only ' + book.quantity + ' left';
+  return 'In stock (' + book.quantity + ' available)';
+}
+
+function buildPrice(book) {
+  const price = document.createElement('p');
+  price.classList.add('book-price');
+  if (book.sales_price !== null) {
+    const original = document.createElement('span');
+    original.classList.add('original-price');
+    original.textContent = formatPrice(book.price);
+    price.appendChild(original);
+    price.appendChild(document.createTextNode(formatPrice(book.sales_price)));
+  } else {
+    price.textContent = formatPrice(book.price);
   }
-  bookArray.forEach((book) => {
-    const card = document.createElement('div');
-    card.classList.add("book-card");
+  return price;
+}
+
+function buildCard(book) {
+  const card = document.createElement('div');
+  card.classList.add('book-card');
+  const detailsUrl = '/book?id=' + book.id;
+
+  const imageLink = document.createElement('a');
+  imageLink.href = detailsUrl;
+  if (book.image_url) {
     const image = document.createElement('img');
     image.src = book.image_url;
     image.alt = book.title + ' cover';
-    image.onerror = () => {
-      image.alt = 'Book cover unavailable';
-      image.removeAttribute('src');
-    };
-    const title = document.createElement('h3');
-    title.textContent = book.title;
-    const author = document.createElement('p')
-    author.textContent = 'By ' + book.author;
-    const description = document.createElement('p');
-    description.textContent = book.description;
-    const price = document.createElement('p');
-    price.classList.add('book-price');
-    if (book.sales_price != null){
-      const original = document.createElement('span');
-      original.classList.add('original-price');
-      original.textContent = '$' + book.price.toFixed(2);
-      price.appendChild(original);
-      price.appendChild(document.createTextNode('$' + book.sales_price.toFixed(2)));
-    }else{
-      price.textContent = '$' + book.price.toFixed(2);
-    }
-    const quantity = document.createElement('p');
-    quantity.textContent = 'Available: ' + book.quantity;
-    const button = document.createElement('button');
-    button.classList.add('add-to-cart');
+    image.onerror = () => image.removeAttribute('src');
+    imageLink.appendChild(image);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.classList.add('cover-placeholder');
+    placeholder.textContent = 'No cover available';
+    imageLink.appendChild(placeholder);
+  }
 
-    // Disable the button when out of stock or when the cart already holds all copies.
-    function refreshButton(){
-      const inCart = getCartItemQuantity(book.id);
-      if (book.quantity <= 0){
-        button.textContent = 'Out of Stock';
-        button.disabled = true;
-      }else if (inCart >= book.quantity){
-        button.textContent = 'Max in Cart';
-        button.disabled = true;
-      }else{
-        button.textContent = inCart > 0 ? 'Add Another (' + inCart + ' in cart)' : 'Add to Cart';
-        button.disabled = false;
-      }
-    }
-    refreshButton();
+  const title = document.createElement('h3');
+  const titleLink = document.createElement('a');
+  titleLink.href = detailsUrl;
+  titleLink.textContent = book.title;
+  title.appendChild(titleLink);
 
-    button.addEventListener('click', ()=>{
-      const result = addToCart(book);
-      if (!result.ok){
-        button.textContent = result.message;
-        setTimeout(refreshButton, 1500);
-        return;
-      }
+  const author = document.createElement('p');
+  author.textContent = 'By ' + book.author;
+
+  const description = document.createElement('p');
+  description.classList.add('book-description');
+  description.textContent = book.description;
+
+  const quantity = document.createElement('p');
+  quantity.classList.add('book-stock');
+  quantity.textContent = stockText(book);
+
+  const button = document.createElement('button');
+  button.classList.add('add-to-cart');
+  button.type = 'button';
+  button.textContent = book.quantity > 0 ? 'Add to Cart' : 'Out of Stock';
+  button.disabled = book.quantity <= 0;
+
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    const result = await addToCart(book.id, 1);
+    if (result.ok) {
       button.textContent = 'Added!';
       button.classList.add('added');
-      setTimeout(() => {
-        button.classList.remove('added');
-        refreshButton();
-      }, 1000);
-    });
-    card.appendChild(image)
-    card.appendChild(title)
-    card.appendChild(author)
-    card.appendChild(description)
-    card.appendChild(price)
-    card.appendChild(quantity);
-    card.appendChild(button)
-    bookList.appendChild(card);
+    } else if (result.status === 401) {
+      button.textContent = 'Log in to add books';
+      setTimeout(() => { window.location.href = '/login'; }, 1200);
+      return;
+    } else {
+      button.textContent = result.message;
+    }
+    setTimeout(() => {
+      button.classList.remove('added');
+      button.textContent = 'Add to Cart';
+      button.disabled = false;
+    }, 1200);
   });
-}
-function searchBooks(){
-  const searchText = searchInput.value.toLowerCase();
-  const filterBooks = books.filter((book) =>{
-    return(
-      book.title.toLowerCase().includes(searchText) ||
-      book.author.toLowerCase().includes(searchText) ||
-      book.description.toLowerCase().includes(searchText)
-    );
-  });
-  sortBooks(filterBooks);
+
+  card.append(imageLink, title, author, description, buildPrice(book), quantity, button);
+  return card;
 }
 
-function sortBooks(bookArray){
-  const sortValue = sortSelect.value;
-
-  if(sortValue == 'price-low'){
-    bookArray.sort((a,b) => (a.sales_price ?? a.price) - (b.sales_price ?? b.price));
-  }else if (sortValue == 'price-high'){
-    bookArray.sort((a,b) => (b.sales_price ?? b.price) - (a.sales_price ?? a.price));
-  }else if(sortValue == 'availability'){
-    bookArray.sort((a, b) => b.quantity - a.quantity);
+function renderBooks(bookArray) {
+  bookList.innerHTML = '';
+  if (bookArray.length === 0) {
+    bookList.textContent = 'No Books Found';
+    return;
   }
-  renderBooks(bookArray);
+  bookArray.forEach((book) => bookList.appendChild(buildCard(book)));
 }
-searchInput.addEventListener('input', searchBooks);
-sortSelect.addEventListener('change', searchBooks);
 
+function showBooks() {
+  const needle = searchText.toLowerCase();
+  const results = allBooks.filter((book) =>
+    book.title.toLowerCase().includes(needle) ||
+    book.author.toLowerCase().includes(needle) ||
+    book.description.toLowerCase().includes(needle)
+  );
 
-renderBooks(books)
+  const sortValue = sortSelect.value;
+  if (sortValue === 'price-low') {
+    results.sort((a, b) => a.effective_price - b.effective_price);
+  } else if (sortValue === 'price-high') {
+    results.sort((a, b) => b.effective_price - a.effective_price);
+  } else if (sortValue === 'availability') {
+    results.sort((a, b) => b.quantity - a.quantity);
+  }
+
+  if (statusLine) {
+    statusLine.textContent = searchText
+      ? results.length + ' result(s) for "' + searchText + '"'
+      : '';
+  }
+  renderBooks(results);
+}
+
+async function loadCatalog() {
+  bookList.textContent = 'Loading books...';
+  try {
+    allBooks = await fetchBooks();
+  } catch (err) {
+    bookList.textContent = 'Could not load books. Please try again later.';
+    return;
+  }
+  showBooks();
+}
+
+sortSelect.addEventListener('change', showBooks);
+loadCatalog();
