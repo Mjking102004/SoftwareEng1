@@ -39,15 +39,16 @@ router.post('/items', asyncHandler(async (req, res) => {
   const cartId = await getOrCreateCart(req.user.user_id);
   const { rows: books } = await pool.query('SELECT quantity FROM books WHERE book_id=$1', [bookId]);
   if (!books.length) throw new HttpError(404, 'Book not found');
-  if (!books[0].quantity) throw new HttpError(409, 'Out of stock');
 
+  // An atomic upsert avoids leaving an invalid quantity on failed requests.
   const { rows } = await pool.query(`INSERT INTO cart_items (cart_id,book_id,quantity)
-    VALUES ($1,$2,$3) ON CONFLICT (cart_id,book_id)
-    DO UPDATE SET quantity=cart_items.quantity+EXCLUDED.quantity RETURNING quantity`, [cartId,bookId,quantity]);
-  if (rows[0].quantity > books[0].quantity) {
-    await pool.query('UPDATE cart_items SET quantity=quantity-$1 WHERE cart_id=$2 AND book_id=$3', [quantity,cartId,bookId]);
-    throw new HttpError(409, 'Requested quantity exceeds inventory');
-  }
+    SELECT $1,book_id,$3 FROM books WHERE book_id=$2 AND quantity >= $3
+    ON CONFLICT (cart_id,book_id)
+    DO UPDATE SET quantity=cart_items.quantity+EXCLUDED.quantity
+      WHERE cart_items.quantity+EXCLUDED.quantity <=
+        (SELECT quantity FROM books WHERE book_id=EXCLUDED.book_id)
+    RETURNING quantity`, [cartId,bookId,quantity]);
+  if (!rows.length) throw new HttpError(409, 'Requested quantity exceeds inventory');
   res.status(201).json(await cartContents(req.user.user_id));
 }));
 
