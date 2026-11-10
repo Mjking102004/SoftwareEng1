@@ -1,40 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rowdy's temp Bookstore</title>
-    <link rel="icon" type="image/png" href="frontend/UTSA-Roadrunners-Logo.png" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Rowdy's Bookstore</title>
+    <link rel="icon" type="image/png" href="/UTSA-Roadrunners-Logo.png">
     <link rel="stylesheet" href="/src/index.css">
-  </head>
-  <body>
-    <!--Navigation-->
+</head>
+<body>
+    <!-- Shared Navigation -->
     <header id="site-header"></header>
-    <!--Home-Intro-->
+
+    <!-- Homepage Introduction -->
     <main>
-      <section class="hero">
-        <h2>Find Your Favorite Series</h2>
-        <h2> Explore our catalog and discover something new</h2>
-      </section>
-      <!--catalog-->
-      <section id="catalog" class="catalog-section">
-        <div class="catalog-header">
-          <h2>Our Books</h2>
-          <select id="sort-books">
-            <option value="default">Sort By</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="availability">Availability</option>
-          </select>
-        </div>
-        <div id="book-list" class="book-grid">
-        </div>
-      </section>
+        <section class="hero">
+            <h2>Find Your Favorite Series</h2>
+            <h2>Explore our catalog and discover something new</h2>
+        </section>
+
+        <!-- Book Catalog -->
+        <section id="catalog" class="catalog-section">
+            <div class="catalog-header">
+                <h2>Our Books</h2>
+                <select id="sort-books">
+                    <option value="default">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="availability">Availability</option>
+                </select>
+            </div>
+            <div id="book-list" class="book-grid">
+            </div>
+        </section>
     </main>
+
     <footer>
-      <P>&copy; 2026 Rowdy's Bookstore</P>
-      <script type="module" src ="/src/ui/navigationUI"></script>
-      <script type="module" src="/src/ui/indexUi.js"></script>
+        <p>&copy; 2026 Rowdy's Bookstore</p>
     </footer>
-  </body>
+
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+    <script type="module" src="/src/ui/indexUi.js"></script>
+</body>
 </html>
