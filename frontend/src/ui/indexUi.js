@@ -1,5 +1,5 @@
 import { fetchBooks } from '../server/bookServer.js';
-import { addToCart, formatPrice } from './cartStore.js';
+import { addToCart, formatPrice, LOGIN_MESSAGE } from './cartStore.js';
 
 const sortSelect = document.getElementById('sort-books');
 const bookList = document.getElementById('book-list');
@@ -80,7 +80,7 @@ function buildCard(book) {
     if (result.ok) {
       button.textContent = 'Added!';
       button.classList.add('added');
-    } else if (result.status === 401) {
+    } else if (result.message === LOGIN_MESSAGE) {
       button.textContent = 'Log in to add books';
       setTimeout(() => { window.location.href = '/login'; }, 1200);
       return;

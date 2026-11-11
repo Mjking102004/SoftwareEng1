@@ -1,5 +1,5 @@
 import { fetchBook } from '../server/bookServer.js';
-import { addToCart, formatPrice } from './cartStore.js';
+import { addToCart, formatPrice, LOGIN_MESSAGE } from './cartStore.js';
 
 const container = document.getElementById('book-detail');
 const bookId = new URLSearchParams(window.location.search).get('id');
@@ -89,7 +89,7 @@ function renderBook(book) {
 		const result = await addToCart(book.id, quantity);
 		if (result.ok) {
 			message.textContent = 'Added ' + quantity + ' to your cart.';
-		} else if (result.status === 401) {
+		} else if (result.message === LOGIN_MESSAGE) {
 			message.textContent = 'Please log in to add books to your cart. Redirecting...';
 			setTimeout(() => { window.location.href = '/login'; }, 1200);
 			return;
