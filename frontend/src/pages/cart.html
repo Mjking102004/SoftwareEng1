@@ -1,34 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Your Cart,Rowdy's temp Bookstore</title>
-	<link rel="icon" type="image/png" href="frontend/UTSA-Roadrunners-Logo.png" />
-	<link rel="stylesheet" href="/src/index.css">
-	<link rel="stylesheet" href="/src/catalog.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Rowdy's Bookstore</title>
+    <link rel="icon" type="image/png" href="/UTSA-Roadrunners-Logo.png">
+    <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="/src/catalog.css">
 </head>
-
 <body>
-	<header id="site header"></header>
+    <header id="site-header"></header>
 
-	<main class="cart-page">
-		<h1> Your shopping cart</h1>
-		<p id="cart-message" class="cart-message" role="status" aria-live="polite"></p>
+    <main class="cart-page">
+        <h1>Your Shopping Cart</h1>
+        <p id="cart-message" class="cart-message" role="status" aria-live="polite"></p>
 
-		<div class="cart-layout">
-			<section id="cart-items" aria-label="Items in your cart"></section>
-			<section id="cart-summary" aria-label="Order Summary"></section>
-		</div>
-	</main>
+        <div class="cart-layout">
+            <section id="cart-items" aria-label="Items in your cart"></section>
+            <aside id="cart-summary" aria-label="Order summary"></aside>
+        </div>
+    </main>
 
-	<footer>
-		<p>&copy; 2026 Rowdy's Bookstore</p>
-	</footer>
+    <footer>
+        <p>&copy; 2026 Rowdy's Bookstore</p>
+    </footer>
 
-	<script type="module" src="/src/ui.navigationUI.js"></script>
-	<script type="module" src="/src/ui/cartui.js"></script>
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+    <script type="module" src="/src/ui/cartUi.js"></script>
 </body>
-
 </html>
