@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Rowdy's Bookstore</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="/src/cart.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="cart-page">
+        <h1>Your Shopping Cart</h1>
+
+        <p id="cart-message" class="cart-message" role="status" aria-live="polite"></p>
+
+        <div class="cart-layout">
+            <section id="cart-items" class="cart-items" aria-label="Items in your cart">
+                <p class="cart-loading">Loading your cart...</p>
+            </section>
+
+            <aside id="cart-summary" class="cart-summary" aria-label="Order summary" hidden></aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Rowdy's Bookstore</p>
+    </footer>
+
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+    <script type="module" src="/src/ui/cartUI.js"></script>
+</body>
+</html>

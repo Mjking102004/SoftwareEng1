@@ -1,6 +1,7 @@
 const pool = require('../db/db');
 const { HttpError, asyncHandler } = require('../utils/http');
 const { positiveInteger, assertFields } = require('../utils/validation');
+const { toCents, calculateTotals, formatTotals, findActiveDiscount, TAX_RATE } = require('../utils/pricing');
 
 
 async function getOrCreateCart(userId) {
@@ -13,7 +14,7 @@ async function getOrCreateCart(userId) {
 
 async function cartContents(userId) {
   const cartId = await getOrCreateCart(userId);
-  const { rows } = await pool.query(`SELECT ci.cart_item_id, ci.book_id, b.title, ci.quantity,
+  const { rows } = await pool.query(`SELECT ci.cart_item_id, ci.book_id, b.title, b.author, b.image_url, ci.quantity,
     b.quantity AS available_quantity, b.price, s.sale_price,
     COALESCE(s.sale_price,b.price) AS effective_price
     FROM cart_items ci JOIN books b ON b.book_id=ci.book_id
@@ -23,13 +24,20 @@ async function cartContents(userId) {
       AND (ends_at IS NULL OR ends_at > NOW())
     ) s ON TRUE
     WHERE ci.cart_id=$1 ORDER BY ci.cart_item_id`, [cartId]);
-  const subtotal = rows.reduce((sum, item) => sum + Number(item.effective_price) * item.quantity, 0);
-  return { items: rows, subtotal: subtotal.toFixed(2) };
+  const subtotalCents = rows.reduce((sum, item) => sum + toCents(item.effective_price) * item.quantity, 0);
+  const itemCount = rows.reduce((sum, item) => sum + item.quantity, 0);
+  return { items: rows, item_count: itemCount, subtotal: (subtotalCents / 100).toFixed(2), subtotalCents };
+}
+
+// Strip the internal cents field before sending a cart to the browser.
+function publicCart(cart) {
+  const { subtotalCents, ...rest } = cart;
+  return rest;
 }
 
 
 const getCart = asyncHandler(async (req, res) => {
-  res.json(await cartContents(req.user.user_id));
+  res.json(publicCart(await cartContents(req.user.user_id)));
 });
 
 const addCartItem = asyncHandler(async (req, res) => {
@@ -49,7 +57,7 @@ const addCartItem = asyncHandler(async (req, res) => {
         (SELECT quantity FROM books WHERE book_id=EXCLUDED.book_id)
     RETURNING quantity`, [cartId,bookId,quantity]);
   if (!rows.length) throw new HttpError(409, 'Requested quantity exceeds inventory');
-  res.status(201).json(await cartContents(req.user.user_id));
+  res.status(201).json(publicCart(await cartContents(req.user.user_id)));
 });
 
 const updateCartItem = asyncHandler(async (req, res) => {
@@ -62,7 +70,7 @@ const updateCartItem = asyncHandler(async (req, res) => {
   const cartId = await getOrCreateCart(req.user.user_id);
   const result = await pool.query('UPDATE cart_items SET quantity=$1 WHERE cart_id=$2 AND book_id=$3 RETURNING cart_item_id', [quantity,cartId,bookId]);
   if (!result.rowCount) throw new HttpError(404, 'Cart item not found');
-  res.json(await cartContents(req.user.user_id));
+  res.json(publicCart(await cartContents(req.user.user_id)));
 });
 
 const removeCartItem = asyncHandler(async (req, res) => {
@@ -70,7 +78,23 @@ const removeCartItem = asyncHandler(async (req, res) => {
   const id = positiveInteger(req.params.bookId, 'bookId');
   const result = await pool.query('DELETE FROM cart_items WHERE cart_id=$1 AND book_id=$2', [cartId,id]);
   if (!result.rowCount) throw new HttpError(404, 'Cart item not found');
-  res.json(await cartContents(req.user.user_id));
+  res.json(publicCart(await cartContents(req.user.user_id)));
 });
 
-module.exports = { getCart, addCartItem, updateCartItem, removeCartItem };
+// GET /api/cart/summary?discount_code=CODE
+// Order summary for the cart/checkout pages: subtotal, discount, tax, total.
+// Uses the same math as createOrder so the preview matches the final order.
+const getCartSummary = asyncHandler(async (req, res) => {
+  const cart = await cartContents(req.user.user_id);
+  const discount = await findActiveDiscount(pool, req.query.discount_code);
+  const totals = calculateTotals(cart.subtotalCents, discount ? discount.discount_percent : 0);
+  res.json({
+    item_count: cart.item_count,
+    ...formatTotals(totals),
+    tax_rate: TAX_RATE,
+    discount_code: discount ? discount.code : null,
+    discount_percent: discount ? discount.discount_percent : 0
+  });
+});
+
+module.exports = { getCart, getCartSummary, addCartItem, updateCartItem, removeCartItem };
