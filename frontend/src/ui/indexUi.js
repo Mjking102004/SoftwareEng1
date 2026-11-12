@@ -6,7 +6,9 @@ const bookList = document.getElementById('book-list');
 const statusLine = document.getElementById('catalog-status');
 
 // The search text comes from the shared navbar
-const searchText = (new URLSearchParams(window.location.search).get('q') || '').trim();
+const searchText = (
+  new URLSearchParams(window.location.search).get('q') || ''
+).trim();
 
 let allBooks = [];
 
@@ -82,7 +84,9 @@ function buildCard(book) {
       button.classList.add('added');
     } else if (result.message === LOGIN_MESSAGE) {
       button.textContent = 'Log in to add books';
-      setTimeout(() => { window.location.href = '/login'; }, 1200);
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1200);
       return;
     } else {
       button.textContent = result.message;
@@ -94,7 +98,15 @@ function buildCard(book) {
     }, 1200);
   });
 
-  card.append(imageLink, title, author, description, buildPrice(book), quantity, button);
+  card.append(
+    imageLink,
+    title,
+    author,
+    description,
+    buildPrice(book),
+    quantity,
+    button
+  );
   return card;
 }
 
@@ -109,10 +121,11 @@ function renderBooks(bookArray) {
 
 function showBooks() {
   const needle = searchText.toLowerCase();
-  const results = allBooks.filter((book) =>
-    book.title.toLowerCase().includes(needle) ||
-    book.author.toLowerCase().includes(needle) ||
-    book.description.toLowerCase().includes(needle)
+  const results = allBooks.filter(
+    (book) =>
+      book.title.toLowerCase().includes(needle) ||
+      book.author.toLowerCase().includes(needle) ||
+      book.description.toLowerCase().includes(needle)
   );
 
   const sortValue = sortSelect.value;
@@ -134,14 +147,19 @@ function showBooks() {
 
 async function loadCatalog() {
   bookList.textContent = 'Loading books...';
+
   try {
     allBooks = await fetchBooks();
+    console.log('Books loaded:', allBooks);
+    showBooks();
   } catch (err) {
+    console.error('Error loading books:', err);
     bookList.textContent = 'Could not load books. Please try again later.';
-    return;
   }
-  showBooks();
 }
 
-sortSelect.addEventListener('change', showBooks);
+if (sortSelect) {
+  sortSelect.addEventListener('change', showBooks);
+}
+
 loadCatalog();
