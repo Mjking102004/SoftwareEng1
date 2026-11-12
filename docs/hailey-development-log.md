@@ -287,3 +287,51 @@ Testing and Remaining Work
 - Backend registration, login, account retrieval, account updates, authentication, and logout remain pending.
 - Server-side validation, password hashing, and duplicate-email handling will be implemented during Sprint 2.
 - Account Overview will display actual customer information once backend integration is complete.
+
+November 10, 2026 - Sprint 2
+
+Developer: Hailey Chagolla
+Role: Scrum Master / Frontend and Authentication
+Branch: hailey
+Commit: 606b38b
+
+Development Work:
+- Connected registration and login pages to the backend API.
+- Integrated account retrieval and profile updates.
+- Implemented logout functionality and session handling.
+- Updated registerUI.js, loginUI.js, accountUI.js, and account.html.
+- Verified that account information is retrieved from and saved to the database.
+
+Testing Performed:
+- Successfully registered a new user.
+- Tested login with registered credentials.
+- Verified that sessions remain active as expected.
+- Retrieved account information from the backend.
+- Updated account information and confirmed changes persisted.
+- Tested logout and confirmed account information is hidden when logged out.
+- Confirmed authentication functionality worked locally.
+
+Code Review and Team Coordination:
+- Reviewed Abraham's latest branch (commit a2b5017).
+- Identified issues in homepage navigation, search, and cart functionality.
+- Confirmed cartStore.js was empty despite being imported by other files.
+- Identified JavaScript errors in cartUi.js.
+- Created a troubleshooting and testing checklist for Abraham and Kenneth.
+- Requested coordination between Abraham and Kenneth to avoid duplicate cart implementations.
+- Recommended holding off on merging until issues are fixed and tested.
+
+Version Control:
+- Committed authentication changes as 606b38b.
+- Successfully pushed changes to origin/hailey.
+- Verified the local branch was clean and synchronized.
+- Did not modify or merge Abraham's branch.
+
+Current Status:
+- Assigned Sprint 2 authentication functionality completed and tested.
+- Changes pushed to GitHub; awaiting team review and integration.
+- Other team members are addressing remaining integration issues.
+
+Next Steps:
+- Coordinate with Kingston on merging completed work.
+- Retest authentication after the team's branches are integrated.
+- Assist with final integration testing and demo preparation.

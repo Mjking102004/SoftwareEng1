@@ -80,6 +80,16 @@ if (header) {
         anchor.textContent = link.text;
         anchor.href = link.href;
 
+        // Cart link shows how many books are in the cart: Cart (3)
+        if (link.href === '/cart') {
+            anchor.textContent = 'Cart (';
+            const count = document.createElement('span');
+            count.id = 'cart-count';
+            count.textContent = '0';
+            anchor.appendChild(count);
+            anchor.appendChild(document.createTextNode(')'));
+        }
+
         accountLinks.appendChild(anchor);
     });
 
@@ -87,4 +97,11 @@ if (header) {
 
     // Add the completed navigation to the page.
     header.appendChild(nav);
+
+    // Fill in the cart count. Pages with their own cart logic (cart/checkout)
+    // already load the cart, so only do it here for every other page.
+    const path = window.location.pathname;
+    if (!['/cart', '/checkout'].some((p) => path.startsWith(p))) {
+        import('./cartStore.js').then((store) => store.loadCart());
+    }
 }

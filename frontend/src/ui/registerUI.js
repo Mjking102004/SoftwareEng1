@@ -81,8 +81,9 @@ email.addEventListener('blur', checkEmail);
 password.addEventListener('blur', checkPassword);
 confirmPassword.addEventListener('blur', checkConfirmPassword);
 
-// Validate the entire form before submission.
-form.addEventListener('submit', (event) => {
+
+ // Validate the entire form before submission.
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const results = [
@@ -93,11 +94,35 @@ form.addEventListener('submit', (event) => {
         checkConfirmPassword()
     ];
 
-    if (results.every(Boolean)) {
-        message.textContent =
-            'Form validation passed. Registration is not connected yet.';
-    } else {
-        message.textContent =
-            'Please correct the highlighted fields.';
+    if (!results.every(Boolean)) {
+        message.textContent = 'Please correct the highlighted fields.';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                first_name: firstName.value.trim(),
+                last_name: lastName.value.trim(),
+                email: email.value.trim(),
+                password: password.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.error || 'Registration failed.';
+            return;
+        }
+
+        message.textContent = 'Registration successful!';
+
+    } catch (error) {
+        message.textContent = 'Unable to complete registration. Please try again.';
     }
 });

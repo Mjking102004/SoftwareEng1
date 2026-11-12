@@ -50,8 +50,9 @@ function checkPassword() {
 email.addEventListener('blur', checkEmail);
 password.addEventListener('blur', checkPassword);
 
-// Validate the form before submission.
-form.addEventListener('submit', (event) => {
+
+// Validate the form and send login credentials to the backend.
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const results = [
@@ -59,11 +60,34 @@ form.addEventListener('submit', (event) => {
         checkPassword()
     ];
 
-    if (results.every(Boolean)) {
+    if (!results.every(Boolean)) {
+        message.textContent = 'Please correct the highlighted fields.';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email.value.trim(),
+                password: password.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.error || 'Login failed.';
+            return;
+        }
+
+        message.textContent = 'Login successful!';
+
+    } catch (error) {
         message.textContent =
-            'Form validation passed. Backend authentication is not connected yet.';
-    } else {
-        message.textContent =
-            'Please correct the highlighted fields.';
+            'Unable to connect to the server. Please try again.';
     }
 });

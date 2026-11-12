@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Rowdy's Bookstore</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="/src/cart.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="cart-page checkout-page">
+        <h1 id="checkout-heading">Checkout</h1>
+
+        <p id="checkout-message" class="cart-message" role="status" aria-live="polite"></p>
+
+        <!-- Step 1: review the order, apply a discount, place it -->
+        <div id="checkout-view" class="cart-layout" hidden>
+            <section class="cart-items" aria-labelledby="review-heading">
+                <h2 id="review-heading">Review Your Order</h2>
+                <ul id="checkout-items" class="checkout-items"></ul>
+                <a class="continue-link" href="/cart">← Edit Cart</a>
+            </section>
+
+            <aside class="cart-summary" aria-labelledby="summary-heading">
+                <h2 id="summary-heading">Order Summary</h2>
+
+                <form id="discount-form" class="discount-form" novalidate>
+                    <label for="discount-code">Discount code</label>
+                    <div class="discount-row">
+                        <input type="text" id="discount-code" name="discount_code"
+                               autocomplete="off" maxlength="50"
+                               aria-describedby="discount-feedback">
+                        <button type="submit" id="discount-apply">Apply</button>
+                    </div>
+                    <span id="discount-feedback" class="discount-feedback" aria-live="polite"></span>
+                </form>
+
+                <div id="checkout-totals"></div>
+
+                <button type="button" id="place-order" class="checkout-button">Place Order</button>
+                <p class="summary-note">Payment is not processed in this demo. Placing the order saves it and updates inventory.</p>
+            </aside>
+        </div>
+
+        <!-- Step 2: order confirmation -->
+        <section id="confirmation-view" class="confirmation" hidden aria-labelledby="confirmation-heading">
+            <h2 id="confirmation-heading">Thank you! Your order has been placed.</h2>
+            <p id="confirmation-number" class="confirmation-number"></p>
+            <ul id="confirmation-items" class="checkout-items"></ul>
+            <div id="confirmation-totals"></div>
+            <a class="checkout-button" href="/#catalog">Continue Shopping</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Rowdy's Bookstore</p>
+    </footer>
+
+    <script type="module" src="/src/ui/navigationUI.js"></script>
+    <script type="module" src="/src/ui/checkoutUI.js"></script>
+</body>
+</html>
