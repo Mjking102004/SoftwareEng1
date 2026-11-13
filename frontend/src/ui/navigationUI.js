@@ -1,4 +1,3 @@
-
 const header = document.getElementById('site-header');
 
 if (header) {
@@ -68,10 +67,8 @@ if (header) {
     const accountLinks = document.createElement('div');
     accountLinks.className = 'nav-actions';
 
+    // Always show the cart, regardless of login status.
     const accountItems = [
-        { text: 'Log In', href: '/login' },
-        { text: 'Register', href: '/register' },
-        { text: 'My Account', href: '/account' },
         { text: 'Cart', href: '/cart' }
     ];
 
@@ -83,9 +80,11 @@ if (header) {
         // Cart link shows how many books are in the cart: Cart (3)
         if (link.href === '/cart') {
             anchor.textContent = 'Cart (';
+
             const count = document.createElement('span');
             count.id = 'cart-count';
             count.textContent = '0';
+
             anchor.appendChild(count);
             anchor.appendChild(document.createTextNode(')'));
         }
@@ -98,9 +97,82 @@ if (header) {
     // Add the completed navigation to the page.
     header.appendChild(nav);
 
-    // Fill in the cart count. Pages with their own cart logic (cart/checkout)
-    // already load the cart, so only do it here for every other page.
+    // Update account links based on the user's login status.
+    async function updateAccountLinks() {
+        let user = null;
+
+        try {
+            const response = await fetch('/api/auth/me');
+
+            if (response.ok) {
+                const data = await response.json();
+                user = data.user;
+            } else if (response.status !== 401) {
+                console.error('Unable to check login status.');
+                return;
+            }
+        } catch (error) {
+            console.error('Unable to check login status:', error);
+            return;
+        }
+
+        // Choose which links to display.
+        const accountNavLinks = user
+            ? [
+                { text: 'My Account', href: '/account' },
+                ...(user.role === 'admin'
+                    ? [{ text: 'Admin Dashboard', href: '/admin' }]
+                    : []),
+                { text: 'Log Out', href: '/login', logout: true }
+            ]
+            : [
+                { text: 'Log In', href: '/login' },
+                { text: 'Register', href: '/register' }
+            ];
+
+        // Keep the Cart link at the end.
+        const cartLink = accountLinks.querySelector('a[href="/cart"]');
+
+        accountNavLinks.forEach((link) => {
+            const anchor = document.createElement('a');
+            anchor.textContent = link.text;
+            anchor.href = link.href;
+
+            // Log out through the existing backend endpoint.
+            if (link.logout) {
+                anchor.addEventListener('click', async (event) => {
+                    event.preventDefault();
+
+                    try {
+                        const response = await fetch('/api/auth/logout', {
+                            method: 'POST'
+                        });
+
+                        if (!response.ok) {
+                            alert('Logout failed. Please try again.');
+                            return;
+                        }
+
+                        // Redirect to login after logout.
+                        window.location.href = '/login';
+
+                    } catch (error) {
+                        alert('Unable to connect to the server.');
+                    }
+                });
+            }
+
+            accountLinks.insertBefore(anchor, cartLink);
+        });
+    }
+
+    // Check the user's login status when the page loads.
+    updateAccountLinks();
+
+    // Fill in the cart count. Pages with their own cart logic
+    // (cart/checkout) already load the cart.
     const path = window.location.pathname;
+
     if (!['/cart', '/checkout'].some((p) => path.startsWith(p))) {
         import('./cartStore.js').then((store) => store.loadCart());
     }

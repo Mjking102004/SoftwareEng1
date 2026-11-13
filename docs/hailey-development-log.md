@@ -1,9 +1,9 @@
 
 Development Log - Rowdy's Bookstore
 
-Developer: Hailey Chagolla
+Developer:Hailey Chagolla
 Role: Scrum Master / User Accounts and Authentication
-Branch: hailey
+Branch:hailey
 Course: CS 3773 Software Engineering
 
 November 6, 2026 - Initial Frontend Development
@@ -123,7 +123,6 @@ The changes have not been merged into main.
 
 9. Next Development Session
 
-
 November 7, 2026 - Frontend Improvements
 
 1. GitHub and Development Environment
@@ -184,7 +183,6 @@ November 7, 2026 - Frontend Improvements
 - Implement server-side validation, password hashing, and authentication.
 - Connect account management to PostgreSQL.
 - Complete integration and end-to-end testing.
-
 
 
 November 8, 2026 - Frontend Integration and UI Improvements
@@ -290,9 +288,9 @@ Testing and Remaining Work
 
 November 10, 2026 - Sprint 2
 
-Developer: Hailey Chagolla
+Developer:Hailey Chagolla
 Role: Scrum Master / Frontend and Authentication
-Branch: hailey
+Branch:hailey
 Commit: 606b38b
 
 Development Work:
@@ -335,3 +333,99 @@ Next Steps:
 - Coordinate with Kingston on merging completed work.
 - Retest authentication after the team's branches are integrated.
 - Assist with final integration testing and demo preparation.
+
+November 12, 2026 - Team Integration and Code Review
+
+Developer:Hailey Chagolla  
+Role: Scrum Master / Frontend and Authentication  
+Branch:hailey
+
+1. Repository and Integration Review
+- Fetched the latest remote branches and reviewed recent commits in main.
+- Confirmed that Abraham's latest pushed homepage changes had been incorporated into main, including integration with Kenneth's shared cart functionality.
+- Reviewed Kingston's additional homepage fixes, including the correction to the catalog status element.
+- Inspected the shared navigation and identified remaining authentication-aware navigation improvements.
+
+2. Team Member Code Review
+- Reviewed Jonathan's new sampleData.sql file containing sample categories, books, discounts, and sales.
+- Confirmed that Jonathan's latest sample-data commit had not yet been merged into main.
+- Reviewed Elian's book-editing changes in the admin frontend and backend.
+- Identified an API method mismatch: Elian's frontend uses PUT, while the current backend defines PATCH /api/admin/books/:id`.
+- Confirmed that the current backend already includes administrator authentication and role-based protection for admin routes.
+
+3. Team Coordination
+- Shared integration findings with the team through Discord.
+- Recommended prioritizing the remaining merges into main, followed by combined application testing.
+- Confirmed plans to update the shared navbar based on login status and administrator permissions.
+- Coordinated remaining work in preparation for the final project submission.
+
+---
+
+November 13, 2026 - Navigation, Authentication, and UI Improvements
+
+Developer:Hailey Chagolla  
+Role: Scrum Master / Frontend and Authentication  
+Branch:hailey
+
+1. GitHub and Development Environment
+- Fetched the latest remote repository updates.
+- Updated the local hailey branch with origin/main using a successful fast-forward merge.
+- Incorporated the latest integrated homepage, cart, checkout, and backend changes into the local development branch.
+- Rebuilt and ran the application using Docker Compose.
+
+2. Dynamic Navigation
+- Updated navigationUI.js to check the current authentication session through GET /api/auth/me.
+- Implemented dynamic navigation links based on the user's login status.
+- Configured logged-out users to see Log In, Register, and Cart.
+- Configured authenticated customers to see My Account, Log Out, and Cart.
+- Added an Admin Dashboard link that appears only when the authenticated user's role is admin.
+- Connected navbar logout functionality to the existing POST /api/auth/logout endpoint.
+- Preserved the shared navbar, search functionality, and Kenneth's cart counter.
+
+3. Login and Registration Improvements
+- Updated loginUI.js to redirect users to the bookstore homepage after successful login.
+- Updated registerUI.js to redirect users to the homepage after successful account registration.
+- Preserved the backend's automatic session creation during registration.
+- Improved the duplicate-account error message to direct existing users to log in.
+- Preserved existing form validation and unsuccessful-submission handling.
+
+4. My Account UI Improvements
+- Reviewed the existing shared stylesheet and account page structure.
+- Created frontend/src/account.css for targeted My Account styling without relocating existing shared CSS.
+- Improved the appearance of the account page's Log Out button and Back to Bookstore link.
+- Updated account.html to position Back to Bookstore on the left and Log Out on the right beneath the Personal Information card.
+- Preserved the Account Overview, profile editing form, and existing account functionality.
+- Kept the shared navbar layout largely unchanged to avoid unnecessary changes to other team members' pages.
+
+5. Testing Performed
+- Verified that logged-out visitors see Log In, Register, and Cart in the navbar.
+- Logged in with an existing customer account and confirmed that My Account and Log Out appear while Log In and Register are hidden.
+- Verified that the account page retrieves the authenticated user's information.
+- Tested logout and confirmed that the guest navigation is restored.
+- Successfully registered a new account and confirmed automatic redirection to the homepage with an active session.
+- Verified that the frontend serves the updated registration JavaScript.
+- Rebuilt and visually reviewed the My Account page after its styling improvements.
+- Confirmed that the Admin Dashboard link appears for an authenticated administrator and opens the admin page.
+
+6. Administrator Demo Setup
+- Registered a dedicated demonstration administrator account through the normal registration page.
+- Confirmed that the backend initially created the account with the customer role.
+- Updated the new account to the admin role directly in the local PostgreSQL database.
+- Confirmed that the navbar recognizes the administrator role and displays Admin Dashboard.
+- Verified that the dashboard page opens and displays its administrative sections.
+- Administrator account provisioning was performed locally and is not part of the Git repository.
+
+7. Current Status and Remaining Work
+- Dynamic navigation has been tested for guests, customers, and administrators.
+- Login, registration, logout, and account retrieval are functioning in local testing.
+- The administrator dashboard opens, but its complete management functionality has not been tested.
+- The local catalog currently displays no books; sample data integration remains a separate team task.
+- Final code changes still need to be reviewed, committed, pushed, and merged into main.
+- The team will need to provision an administrator account in the database used for the final demonstration.
+
+8. Next Steps
+- Review modified files and confirm that only intended changes are included.
+- Commit and push completed frontend improvements from my branch.
+- Coordinate merging the changes into main.
+- Verify the final integrated application after the remaining team changes are merged.
+- Assist with final demonstration preparation and testing.

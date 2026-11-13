@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account | Rowdy's Bookstore</title>
     <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="/src/account.css">
 </head>
 <body>
     <header id="site-header"></header>
@@ -105,17 +106,18 @@
             ></div>
         </section>
 
-        <!-- Logout -->
-        <p class="account-back">
-            <button type="button" id="logout-button" hidden>
-                Log Out
-            </button>
-        </p>
+        <!-- Account Navigation -->
+        <div class="account-actions">
+            <p class="account-back">
+                <a href="/">Back to Bookstore</a>
+            </p>
 
-        <!-- Return to Home -->
-        <p class="account-back">
-            <a href="/">Back to Bookstore</a>
-        </p>
+            <p class="account-back">
+                <button type="button" id="logout-button" hidden>
+                     Log Out
+                </button>
+            </p>
+        </div>
 
     </main>
 

@@ -116,11 +116,15 @@ form.addEventListener('submit', async (event) => {
         const data = await response.json();
 
         if (!response.ok) {
-            message.textContent = data.error || 'Registration failed.';
+            message.textContent =
+                data.error === 'This record already exists'
+                    ? 'An account with this email already exists. Please log in.'
+                    : data.error || 'Registration failed.';
             return;
         }
 
-        message.textContent = 'Registration successful!';
+        // Registration creates a login session, so redirect to the homepage.
+        window.location.replace('/');
 
     } catch (error) {
         message.textContent = 'Unable to complete registration. Please try again.';

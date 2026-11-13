@@ -84,7 +84,8 @@ form.addEventListener('submit', async (event) => {
             return;
         }
 
-        message.textContent = 'Login successful!';
+        // Redirect to the account page after successful login.
+        window.location.replace('/');
 
     } catch (error) {
         message.textContent =

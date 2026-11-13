@@ -52,6 +52,10 @@ header {
     gap: 10px;
 }
 
+.logo span {
+    transform: translateX(16px);
+}
+
 .logo img {
     height: 40px;
     width: auto;
@@ -307,7 +311,6 @@ footer {
         gap: 15px;
     }
 }
-
 
 /* Registration, Login, and Account Pages */
 

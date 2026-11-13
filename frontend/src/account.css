@@ -1,0 +1,49 @@
+/* My Account - Secondary Actions */
+
+.account-page .account-back a,
+.account-page #logout-button {
+    display: inline-block;
+    padding: 11px 20px;
+    background-color: white;
+    color: #032044;
+    border: 1px solid #D6DEE8;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.account-page .account-back a:hover,
+.account-page #logout-button:hover {
+    background-color: #E9EFF6;
+    color: #032044;
+    text-decoration: none;
+}
+
+.account-page .account-back a:focus-visible,
+.account-page #logout-button:focus-visible {
+    outline: 3px solid #F15A22;
+    outline-offset: 3px;
+}
+
+/* Arrange account navigation side by side */
+.account-page .account-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.account-page .account-actions .account-back {
+    margin: 0;
+}
+
+/* Respect the logout button's hidden state */
+.account-page #logout-button[hidden] {
+    display: none;
+}
