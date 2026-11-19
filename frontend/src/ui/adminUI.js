@@ -1,4 +1,6 @@
-import {fetchBooks, createBook, updateBook, deleteBook, fetchCategories, fetchDiscounts, createDiscount, setDiscountActive} from '../server/adminServer.js';
+import {fetchBooks, createBook, updateBook, deleteBook, fetchCategories, fetchDiscounts,
+        createDiscount, setDiscountActive, fetchSales, createSale, setSaleActive, fetchUsers,
+        setUserRole} from '../server/adminServer.js';
 
 const booksContainer = document.getElementById('admin-books');
 const addBookForm = document.getElementById('add-book-form');
@@ -10,6 +12,12 @@ let editingBookId = null;
 const discountsContainer = document.getElementById('admin-discounts');
 const addDiscountForm = document.getElementById('add-discount-form');
 const discountMessage = document.getElementById('discount-message');
+const salesContainer = document.getElementById('admin-sales');
+const addSaleForm = document.getElementById('add-sale-form');
+const saleMessage = document.getElementById('sale-message');
+const saleBookSelect = document.getElementById('sale-book');
+const usersContainer = document.getElementById('admin-users');
+const userMessage = document.getElementById('user-message');
 
 //build a table froma list of rows and the columns to show
 function createTable(rows, columns, actions){
@@ -212,3 +220,121 @@ addDiscountForm.addEventListener('submit', async (event) => {
     renderDiscounts();
 });
 renderDiscounts();
+
+
+//create the on/off button for a sale row
+function createSaleActions(sale){
+    const button = document.createElement('button');
+    button.className = 'admin-edit';
+    button.textContent = sale.active ? 'End Sale' : 'Restart Sale';
+
+    button.addEventListener('click', async () => {
+        const result = await setSaleActive(sale.sale_id, !sale.active);
+        saleMessage.textContent = result.error ||
+            `Sale on "${sale.title}" is now ${result.active ? 'active' : 'ended'}.`;
+        renderSales();
+    });
+
+    return button;
+}
+
+//show all sales, with each book's title and reg price
+async function renderSales(){
+    const [salesData, books] = await Promise.all([fetchSales(), fetchBooks()]);
+    const sales = salesData.sales || [];
+
+    //fill the book dropdown
+    saleBookSelect.replaceChildren();
+    books.forEach((book) => {
+        const option = document.createElement('option');
+        option.value = book.book_id;
+        option.textContent = `${book.title} ($${book.price})`;
+        saleBookSelect.appendChild(option);
+    });
+
+    if (sales.length === 0){
+        salesContainer.textContent = 'No sales yet.';
+        return;
+    }
+
+    const rows = sales.map((sale) => {
+        const book = books.find((b) => b.book_id === sale.book_id);
+        return {
+            ...sale,
+            title: book ? book.title : `Book #${sale.book_id}`,
+            regular: book ? `$${book.price}` : '',
+            price: `$${sale.sale_price}`,
+            status: sale.active ? 'Active' : 'Ended'
+        };
+    });
+
+    salesContainer.replaceChildren(createTable(rows, [
+        {label: "ID", key: "sale_id"},
+        {label: "Book", key: "title"},
+        {label: "Regular Price", key: "regular"},
+        {label: "Sale Price", key: "price"},
+        {label: "Status", key: "status"}
+    ], createSaleActions));
+}
+
+//add a sale when the form is submitted
+addSaleForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const sale = Object.fromEntries(new FormData(addSaleForm));
+    const result = await createSale(sale);
+
+    if (result.error){
+        saleMessage.textContent = result.error;
+        return;
+    }
+
+    saleMessage.textContent = `Added a sale at $${result.sale_price}.`;
+    addSaleForm.reset();
+    renderSales();
+});
+
+//ceate the role button for a user row
+function createUserActions(user){
+    const button = document.createElement("button");
+    button.className = 'admin-edit';
+    const newRole = user.role === "admin" ? 'customer' : 'admin';
+    button.textContent = newRole === "admin" ? "Make Admin" : "Make Customer";
+
+    button.addEventListener('click', async () => {
+        if(!confirm(`Change ${user.email} to ${newRole}?`)) return;
+        const result = await setUserRole(user.user_id, newRole);
+        userMessage.textContent = result.error || `${result.user.email} is now ${result.user.role === "admin" ? 'an Admin' : 'a customer'}.`;
+        renderUsers();
+    });
+
+    return button;
+}
+
+//show all users in the users card
+async function renderUsers(){
+    const data = await fetchUsers();
+    const users = data.users || [];
+
+    if(users.length === 0){
+        usersContainer.textContent = 'No users yet.';
+        return;
+    }
+
+    const rows = users.map((user) => ({
+        ...user,
+        name: `${user.first_name} ${user.last_name}`,
+        joined: new Date(user.created_at).toLocaleDateString()
+    }));
+
+    usersContainer.replaceChildren(createTable(rows, [
+        {label: "ID", key: "user_id"},
+        {label: "Name", key: "name"},
+        {label: "Email", key: "email"},
+        {label: "Role", key: "role"},
+        {label: "Joined", key: "joined"},
+    ], createUserActions));
+}
+
+renderUsers();
+renderSales();

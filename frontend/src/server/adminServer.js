@@ -63,3 +63,45 @@ export async function setDiscountActive(id, active){
     });
     return response.json();
 }
+
+//get all sales
+export async function fetchSales(){
+    const response = await fetch('/api/admin/sales');
+    return response.json();
+}
+
+//create a sale for a book
+export async function createSale(sale){
+    const response = await fetch('/api/admin/sales', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(sale),
+    });
+    return response.json();
+}
+
+//turn a sale on or off
+export async function setSaleActive(id, active){
+    const response = await fetch(`/api/admin/sales/${id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({active}),
+    });
+    return response.json();
+}
+
+//get all users
+export async function fetchUsers(){
+    const response = await fetch('/api/admin/users');
+    return response.json();
+}
+
+//change a user's role (customer or admin)
+export async function setUserRole(id, role){
+    const response = await fetch(`/api/admin/users/${id}/role`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({role}),
+    });
+    return response.json();
+}
