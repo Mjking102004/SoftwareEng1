@@ -2,6 +2,14 @@ import {fetchBooks, createBook, updateBook, deleteBook, fetchCategories, fetchDi
         createDiscount, setDiscountActive, fetchSales, createSale, setSaleActive, fetchUsers,
         setUserRole, fetchOrders, setOrderStatus} from '../server/adminServer.js';
 
+//only admins can access this page
+const meResponse = await fetch('/api/auth/me');
+const me = meResponse.ok ? (await meResponse.json()).user : null;
+if(!me || me.role !== "admin"){
+    window.location.replace(me ? "/" : "/login");
+    throw new Error("Admins only")
+}
+
 const booksContainer = document.getElementById('admin-books');
 const addBookForm = document.getElementById('add-book-form');
 const bookMessage = document.getElementById('book-message');
