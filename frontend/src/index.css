@@ -707,3 +707,29 @@ footer {
 #user-message{
     margin-bottom: 15px;
 }
+
+.admin-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.admin-card-header h2{
+    margin-bottom: 0px;
+}
+
+#order-sort,
+.admin-status{
+    padding: 8px;
+    border: 1px solid #C8DCFF;
+    border-radius: 6px;
+    background-color: white;
+    font-family: inherit;
+}
+
+#order-message{
+    margin-bottom: 15px;
+}

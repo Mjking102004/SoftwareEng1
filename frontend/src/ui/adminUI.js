@@ -1,6 +1,6 @@
 import {fetchBooks, createBook, updateBook, deleteBook, fetchCategories, fetchDiscounts,
         createDiscount, setDiscountActive, fetchSales, createSale, setSaleActive, fetchUsers,
-        setUserRole} from '../server/adminServer.js';
+        setUserRole, fetchOrders, setOrderStatus} from '../server/adminServer.js';
 
 const booksContainer = document.getElementById('admin-books');
 const addBookForm = document.getElementById('add-book-form');
@@ -18,6 +18,11 @@ const saleMessage = document.getElementById('sale-message');
 const saleBookSelect = document.getElementById('sale-book');
 const usersContainer = document.getElementById('admin-users');
 const userMessage = document.getElementById('user-message');
+const ordersContainer = document.getElementById('admin-orders');
+const orderHistoryContainer = document.getElementById('admin-order-history');
+const orderSort = document.getElementById('order-sort');
+const orderMessage = document.getElementById('order-message');
+let allOrders = [];
 
 //build a table froma list of rows and the columns to show
 function createTable(rows, columns, actions){
@@ -337,4 +342,91 @@ async function renderUsers(){
 }
 
 renderUsers();
+
+
+//format an order for the tables
+function formatOrder(order){
+    return {
+        ...order,
+        customer: `${order.first_name} ${order.last_name}`,
+        date: new Date(order.order_date).toLocaleString(),
+        totalText: `$${order.total}`
+    };
+}
+
+//create the status dropdown for a current order
+function createOrderActions(order){
+    const select = document.createElement('select');
+    select.className = 'admin-status';
+
+    ['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'].forEach((status) => {
+        const option = document.createElement('option');
+        option.value = status;
+        option.textContent = status;
+        option.selected = status === order.status;
+        select.appendChild(option);
+    });
+
+    select.addEventListener('change', async () => {
+        const result = await setOrderStatus(order.order_id, select.value);
+        orderMessage.textContent = result.error ||
+            `Order #${order.order_id} is now ${result.order.status}.`;
+        renderOrders();
+    });
+
+    return select;
+}
+
+//sort orders by the option picked in the dropdown
+function sortOrders(orders){
+    const sorted = [...orders];
+    const by = orderSort.value;
+
+    if (by === 'date-new') sorted.sort((a, b) => new Date(b.order_date) - new Date(a.order_date));
+    if (by === 'date-old') sorted.sort((a, b) => new Date(a.order_date) - new Date(b.order_date));
+    if (by === 'customer') sorted.sort((a, b) => a.customer.localeCompare(b.customer));
+    if (by === 'total-high') sorted.sort((a, b) => Number(b.total) - Number(a.total));
+    if (by === 'total-low') sorted.sort((a, b) => Number(a.total) - Number(b.total));
+
+    return sorted;
+}
+
+const orderColumns = [
+    {label: "Order", key: "order_id"},
+    {label: "Date", key: "date"},
+    {label: "Customer", key: "customer"},
+    {label: "Email", key: "email"},
+    {label: "Total", key: "totalText"},
+    {label: "Status", key: "status"}
+];
+
+//show every order, sorted
+function renderOrderHistory(){
+    if (allOrders.length === 0){
+        orderHistoryContainer.textContent = 'No orders yet.';
+        return;
+    }
+    orderHistoryContainer.replaceChildren(createTable(sortOrders(allOrders), orderColumns));
+}
+
+//load orders, then show current orders and the full history
+async function renderOrders(){
+    const data = await fetchOrders();
+    allOrders = (data.orders || []).map(formatOrder);
+
+    const current = allOrders.filter((order) => !['Completed', 'Cancelled'].includes(order.status));
+
+    if (current.length === 0){
+        ordersContainer.textContent = 'No current orders.';
+    } else {
+        ordersContainer.replaceChildren(createTable(current, orderColumns, createOrderActions));
+    }
+
+    renderOrderHistory();
+}
+
+orderSort.addEventListener('change', renderOrderHistory);
+
+renderOrders();
+
 renderSales();

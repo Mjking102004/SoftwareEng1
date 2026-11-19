@@ -111,7 +111,9 @@ const updateUserRole = asyncHandler(async (req, res) => {
 });
 
 const getOrders = asyncHandler(async (req, res) => {
-  const {rows} = await pool.query('SELECT * FROM orders ORDER BY order_date DESC,order_id DESC');
+  const {rows} = await pool.query(`SELECT o.*, u.first_name, u.last_name, u.email
+                                   FROM orders o JOIN users u ON u.user_id = o.user_id
+                                   ORDER BY o.order_date DESC, o.order_id DESC`);
   res.json({orders:rows});
 });
 

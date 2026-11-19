@@ -119,10 +119,26 @@
             <div id="admin-sales"></div>
         </section>
 
-        <!-- Orders -->
+        <!-- Current Orders -->
         <section class="admin-card">
-            <h2>Orders</h2>
+            <h2>Current Orders</h2>
+            <p id="order-message" class="form-feedback" role="status"></p>
             <div id="admin-orders"></div>
+        </section>
+
+        <!-- Order History -->
+        <section class="admin-card">
+            <div class="admin-card-header">
+                <h2>Order History</h2>
+                <select id="order-sort" aria-label="Sort order history">
+                    <option value="date-new">Date: Newest first</option>
+                    <option value="date-old">Date: Oldest first</option>
+                    <option value="customer">Customer: A to Z</option>
+                    <option value="total-high">Total: High to Low</option>
+                    <option value="total-low">Total: Low to High</option>
+                </select>
+            </div>
+            <div id="admin-order-history"></div>
         </section>
 
     </main>

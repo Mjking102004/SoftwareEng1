@@ -105,3 +105,19 @@ export async function setUserRole(id, role){
     });
     return response.json();
 }
+
+//get all orders
+export async function fetchOrders(){
+    const response = await fetch('/api/admin/orders');
+    return response.json();
+}
+
+//change an order's status
+export async function setOrderStatus(id, status){
+    const response = await fetch(`/api/admin/orders/${id}/status`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({status}),
+    });
+    return response.json();
+}
