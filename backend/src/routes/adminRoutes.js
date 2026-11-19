@@ -13,6 +13,7 @@ router.get('/categories', controller.getCategories);
 router.post('/categories', controller.createCategory);
 router.get('/users', controller.getUsers);
 router.patch('/users/:id/role', controller.updateUserRole);
+router.patch('/users/:id', controller.updateUser);
 router.get('/orders', controller.getOrders);
 router.patch('/orders/:id/status', controller.updateOrderStatus);
 router.get('/discounts', controller.getDiscounts);
