@@ -14,6 +14,16 @@ export async function createBook(book){
     return response.json();
 }
 
+//update a book
+export async function updateBook(id, book){
+    const response = await fetch(`/api/admin/books/${id}`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(book),
+    });
+    return response.json();
+}
+
 //delete book
 export async function deleteBook(id){
     const response = await fetch(`/api/admin/books/${id}`, {
@@ -25,5 +35,31 @@ export async function deleteBook(id){
 //get all categories
 export async function fetchCategories(){
     const response = await fetch('/api/admin/categories');
+    return response.json();
+}
+
+//get all discount codes
+export async function fetchDiscounts(){
+    const response = await fetch('/api/admin/discounts');
+    return response.json();
+}
+
+//create a discount code
+export async function createDiscount(discount){
+    const response = await fetch('/api/admin/discounts', {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(discount),
+    });
+    return response.json();
+}
+
+//turn a discount code on or off
+export async function setDiscountActive(id, active){
+    const response = await fetch(`/api/admin/discounts/${id}`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({active}),
+    });
     return response.json();
 }

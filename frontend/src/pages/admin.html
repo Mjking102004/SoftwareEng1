@@ -56,7 +56,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit">Add Book</button>
+                    <button type="submit" id="book-submit">Add Book</button>
+                    <button type="button" id="book-cancel" hidden>Cancel</button>
                 </div>
             </form>
 
@@ -73,6 +74,23 @@
         <!-- Discount Codes -->
         <section class="admin-card">
             <h2>Discount Codes</h2>
+            <form id="add-discount-form" class="admin-form">
+                <div class="form-group">
+                    <label for="discount-code">Code</label>
+                    <input type="text" id="discount-code" name="code" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="discount-percent">Percent Off</label>
+                    <input type="number" id="discount-percent" name="discount_percent" min="1" max="100" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Add Code</button>
+                </div>
+            </form>
+
+            <p id="discount-message" class="form-feedback" role="status"></p>
             <div id="admin-discounts"></div>
         </section>
 
