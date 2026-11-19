@@ -53,7 +53,7 @@ const getCategories = async (req, res) => {
 
 
 const { HttpError, asyncHandler } = require('../utils/http');
-const { positiveInteger, nonnegativeMoney, trimmedString, assertFields } = require('../utils/validation');
+const { positiveInteger, nonnegativeMoney, trimmedString, emailAddress, assertFields } = require('../utils/validation');
 
 
 const bookFields = ['title','author','description','price','quantity','image_url','category_id'];
@@ -108,6 +108,17 @@ const updateUserRole = asyncHandler(async (req, res) => {
     RETURNING user_id,first_name,last_name,email,role,created_at`,[req.body.role,id]);
   if (!rows.length) throw new HttpError(404,'User not found');
   res.json({user:rows[0]});
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+    assertFields(req.body,['first_name','last_name','email']);
+    const id = positiveInteger(req.params.id);
+    const {rows} = await pool.query(`UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE user_id=$4
+                                     RETURNING user_id,first_name,last_name,email,role,created_at`,
+                                     [trimmedString(req.body.first_name,'first_name',50), trimmedString(req.body.last_name,'last_name', 50),
+                                         emailAddress(req.body.email), id]);
+    if(!rows.length) throw new HttpError(404,'User not found');
+    res.json({user:rows[0]});
 });
 
 const getOrders = asyncHandler(async (req, res) => {
@@ -181,4 +192,4 @@ const updateSale = asyncHandler(async (req, res) => {
   res.json(rows[0]);
 });
 
-module.exports = { getBooks, createBook, deleteBook, getCategories, updateBook, createCategory, getUsers, updateUserRole, getOrders, updateOrderStatus, getDiscounts, createDiscount, updateDiscount, getSales, createSale, updateSale };
+module.exports = { getBooks, createBook, deleteBook, getCategories, updateBook, createCategory, getUsers, updateUserRole, updateUser, getOrders, updateOrderStatus, getDiscounts, createDiscount, updateDiscount, getSales, createSale, updateSale };

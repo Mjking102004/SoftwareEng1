@@ -1,6 +1,6 @@
 import {fetchBooks, createBook, updateBook, deleteBook, fetchCategories, fetchDiscounts,
         createDiscount, setDiscountActive, fetchSales, createSale, setSaleActive, fetchUsers,
-        setUserRole, fetchOrders, setOrderStatus} from '../server/adminServer.js';
+        setUserRole, updateUser, fetchOrders, setOrderStatus} from '../server/adminServer.js';
 
 //only admins can access this page
 const meResponse = await fetch('/api/auth/me');
@@ -26,6 +26,9 @@ const saleMessage = document.getElementById('sale-message');
 const saleBookSelect = document.getElementById('sale-book');
 const usersContainer = document.getElementById('admin-users');
 const userMessage = document.getElementById('user-message');
+const editUserForm = document.getElementById('edit-user-form');
+const userCancel = document.getElementById('user-cancel');
+let editingUserId = null;
 const ordersContainer = document.getElementById('admin-orders');
 const orderHistoryContainer = document.getElementById('admin-order-history');
 const orderSort = document.getElementById('order-sort');
@@ -309,6 +312,14 @@ addSaleForm.addEventListener('submit', async (event) => {
 
 //ceate the role button for a user row
 function createUserActions(user){
+    const actions = document.createElement('div');
+    actions.className = 'admin-actions';
+
+    const editButton = document.createElement('button');
+    editButton.className = 'admin-edit';
+    editButton.textContent = 'Edit';
+    editButton.addEventListener('click', async () => startEditingUser(user));
+
     const button = document.createElement("button");
     button.className = 'admin-edit';
     const newRole = user.role === "admin" ? 'customer' : 'admin';
@@ -321,7 +332,26 @@ function createUserActions(user){
         renderUsers();
     });
 
-    return button;
+    actions.append(editButton, button);
+    return actions;
+}
+
+//fill the user form to edit a user's name and email
+function startEditingUser(user){
+    editingUserId = user.user_id;
+    document.getElementById('user-first-name').value = user.first_name;
+    document.getElementById('user-last-name').value = user.last_name;
+    document.getElementById('user-email').value = user.email;
+    editUserForm.hidden = false;
+    userMessage.textContent = `Editing ${user.email}`;
+    editUserForm.closest('.admin-card').scrollIntoView({behavior: 'smooth'});
+}
+
+//hide the user form
+function stopEditingUser(user){
+    editingUserId = null;
+    editUserForm.reset();
+    editUserForm.hidden = true;
 }
 
 //show all users in the users card
@@ -351,6 +381,28 @@ async function renderUsers(){
 
 renderUsers();
 
+//save a user's new name and email
+editUserForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const user = Object.fromEntries(new FormData(editUserForm));
+    const result = await updateUser(editingUserId, user);
+
+    if (result.error){
+        userMessage.textContent = result.error;
+        return;
+    }
+
+    userMessage.textContent = `Updated ${result.user.first_name} ${result.user.last_name}.`;
+    stopEditingUser();
+    renderUsers();
+});
+
+//cancel editing a user
+userCancel.addEventListener('click', () => {
+    stopEditingUser();
+    userMessage.textContent = '';
+});
 
 //format an order for the tables
 function formatOrder(order){

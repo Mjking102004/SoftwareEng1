@@ -69,6 +69,28 @@
         <section class="admin-card">
             <h2>Users</h2>
             <p id="user-message" class="form-feedback" role="status"></p>
+            <form id="edit-user-form" class="admin-form" hidden>
+                <div class="form-group">
+                    <label for="user-first-name">First Name</label>
+                    <input type="text" id="user-first-name" name="first_name" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-last-name">Last Name</label>
+                    <input type="text" id="user-last-name" name="last_name" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Save User</button>
+                    <button type="button" id="user-cancel">Cancel</button>
+                </div>
+            </form>
+
             <div id="admin-users"></div>
         </section>
 

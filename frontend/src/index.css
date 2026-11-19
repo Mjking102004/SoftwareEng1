@@ -733,3 +733,18 @@ footer {
 #order-message{
     margin-bottom: 15px;
 }
+
+.admin-form[hidden]{
+    display: none;
+}
+
+.admin-form #user-cancel{
+    margin-top: 8px;
+    background-color: white;
+    color: #032044;
+    border: 1px solid #032044;
+}
+
+.admin-form #user-cancel:hover{
+    background-color: #E9EFF6;
+}

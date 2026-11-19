@@ -121,3 +121,13 @@ export async function setOrderStatus(id, status){
     });
     return response.json();
 }
+
+//update a user's name and email
+export async function updateUser(id, user){
+    const response = await fetch(`/api/admin/users/${id}`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(user),
+    });
+    return response.json();
+}
