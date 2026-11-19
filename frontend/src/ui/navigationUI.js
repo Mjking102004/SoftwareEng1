@@ -51,7 +51,7 @@ if (header) {
     const searchInput = document.createElement('input');
     searchInput.type = 'search';
     searchInput.name = 'q';
-    searchInput.placeholder = 'Search books, authors, or ISBN...';
+    searchInput.placeholder = 'Search titles, authors, or descriptions...';
     searchInput.setAttribute('aria-label', 'Search books');
     searchInput.required = true;
 
